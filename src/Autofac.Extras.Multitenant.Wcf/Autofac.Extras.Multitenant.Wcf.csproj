@@ -12,7 +12,7 @@
     <AssemblyName>Autofac.Extras.Multitenant.Wcf</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\Build\SharedKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\Autofac.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion Condition="$(TargetFrameworkVersion)==''">v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile Condition="$(TargetFrameworkVersion)==''">
     </TargetFrameworkProfile>
@@ -27,7 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\..\Build\Full.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\Full.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Debug\Autofac.Extras.Multitenant.Wcf.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
@@ -38,23 +38,23 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\..\Build\Full.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\Full.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Release\Autofac.Extras.Multitenant.Wcf.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
-      <HintPath>..\..\..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Extras.Multitenant">
-      <HintPath>..\..\..\packages\Autofac.Extras.Multitenant.3.1.1\lib\net40\Autofac.Extras.Multitenant.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.Extras.Multitenant.3.1.1\lib\net40\Autofac.Extras.Multitenant.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Integration.Wcf">
-      <HintPath>..\..\..\packages\Autofac.Wcf.3.0.1\lib\net40\Autofac.Integration.Wcf.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.Wcf.3.0.1\lib\net40\Autofac.Integration.Wcf.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Castle.Core.3.2.2\lib\net40-client\Castle.Core.dll</HintPath>
+      <HintPath>..\..\packages\Castle.Core.3.2.2\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,13 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\..\ProductAssemblyInfo.cs">
-      <Link>Properties\ProductAssemblyInfo.cs</Link>
-    </Compile>
-    <CodeAnalysisDictionary Include="..\..\..\Build\CodeAnalysisDictionary.xml">
+    <CodeAnalysisDictionary Include="..\..\CodeAnalysisDictionary.xml">
       <Link>CodeAnalysisDictionary.xml</Link>
     </CodeAnalysisDictionary>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,7 +79,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\VersionAssemblyInfo.cs" />
     <Compile Include="DynamicProxy\CustomAttributeDataExtensions.cs" />
     <Compile Include="DynamicProxy\IgnoreAttributeInterfaceProxyInstanceContributor.cs" />
     <Compile Include="DynamicProxy\ServiceHostInterfaceProxyGenerator.cs" />
@@ -106,6 +99,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Autofac.Extras.Multitenant.Wcf.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
