@@ -13,11 +13,12 @@
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\Autofac.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion Condition="$(TargetFrameworkVersion)==''">v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion Condition="$(TargetFrameworkVersion)==''">v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile Condition="$(TargetFrameworkVersion)==''">
     </TargetFrameworkProfile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,7 @@
     <CodeAnalysisRuleSet>..\..\Full.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Debug\Autofac.Multitenant.Wcf.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,20 +43,24 @@
     <CodeAnalysisRuleSet>..\..\Full.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Release\Autofac.Multitenant.Wcf.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
-      <HintPath>..\..\packages\Autofac.3.3.1\lib\net40\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.4.0.0-beta8-135\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Autofac.Extras.Multitenant">
-      <HintPath>..\..\packages\Autofac.Extras.Multitenant.3.1.1\lib\net40\Autofac.Extras.Multitenant.dll</HintPath>
+    <Reference Include="Autofac.Integration.Wcf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Wcf.4.0.0-CI-231\lib\net45\Autofac.Integration.Wcf.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Autofac.Integration.Wcf">
-      <HintPath>..\..\packages\Autofac.Wcf.3.0.1\lib\net40\Autofac.Integration.Wcf.dll</HintPath>
+    <Reference Include="Autofac.Multitenant, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Multitenant.4.0.0-beta8-219\lib\net45\Autofac.Multitenant.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Core, Version=3.2.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Castle.Core.3.2.2\lib\net40-client\Castle.Core.dll</HintPath>
+      <HintPath>..\..\packages\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

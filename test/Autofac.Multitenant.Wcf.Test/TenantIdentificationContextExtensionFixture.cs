@@ -1,22 +1,21 @@
-﻿using System;
-using Autofac.Multitenant.Wcf;
-using NUnit.Framework;
+﻿using Xunit;
 
 namespace Autofac.Multitenant.Wcf.Test
 {
-    [TestFixture]
     public class TenantIdentificationContextExtensionFixture
     {
-        [Test(Description = "Verifies that Attach is, effectively, a no-op.")]
+        [Fact]
         public void Attach_NoOp()
         {
-            Assert.DoesNotThrow(() => new TenantIdentificationContextExtension().Attach(null));
+            // XUnit does not have "Assert.DoesNotThrow".
+            new TenantIdentificationContextExtension().Attach(null);
         }
 
-        [Test(Description = "Verifies that Detach is, effectively, a no-op.")]
+        [Fact]
         public void Detach_NoOp()
         {
-            Assert.DoesNotThrow(() => new TenantIdentificationContextExtension().Detach(null));
+            // XUnit does not have "Assert.DoesNotThrow".
+            new TenantIdentificationContextExtension().Detach(null);
         }
     }
 }

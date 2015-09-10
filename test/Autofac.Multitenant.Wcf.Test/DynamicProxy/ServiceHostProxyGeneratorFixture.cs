@@ -1,34 +1,32 @@
 ﻿using System;
 using System.ServiceModel;
 using Autofac.Multitenant.Wcf.DynamicProxy;
-using NUnit.Framework;
+using Xunit;
 
 namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
 {
-    [TestFixture]
     public class ServiceHostProxyGeneratorFixture
     {
-        [Test(Description = "Verifies that the proxy builder used is the special service host proxy builder.")]
+        [Fact]
         public void Ctor_ProxyBuilderIsServiceHostProxyBuilder()
         {
             var generator = new ServiceHostProxyGenerator();
-            Assert.IsInstanceOf<ServiceHostProxyBuilder>(generator.ProxyBuilder);
+            Assert.IsType<ServiceHostProxyBuilder>(generator.ProxyBuilder);
         }
 
-        [Test(Description = "Creates a proxy to a service interface and verifies it can be hosted.")]
+        [Fact]
         public void CreateWcfProxy_CustomProxyTypeCanBeHosted()
         {
             var generator = new ServiceHostProxyGenerator();
             object target = new ServiceImplementation();
             Type interfaceToProxy = typeof(IServiceContract);
             var proxy = generator.CreateWcfProxy(interfaceToProxy, target);
-            Assert.DoesNotThrow(() =>
-            {
-                new ServiceHost(proxy.GetType(), new Uri("http://localhost:22111/Foo.svc"));
-            });
+
+            // XUnit does not have "Assert.DoesNotThrow".
+            new ServiceHost(proxy.GetType(), new Uri("http://localhost:22111/Foo.svc"));
         }
 
-        [Test(Description = "Attempts to create a proxy to a type not an interface.")]
+        [Fact]
         public void CreateWcfProxy_InterfaceToProxyNotInterface()
         {
             var generator = new ServiceHostProxyGenerator();
@@ -37,7 +35,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
             Assert.Throws<ArgumentException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
-        [Test(Description = "Attempts to create a proxy to an interface that isn't a service contract.")]
+        [Fact]
         public void CreateWcfProxy_InterfaceToProxyNotServiceContract()
         {
             var generator = new ServiceHostProxyGenerator();
@@ -46,7 +44,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
             Assert.Throws<ArgumentException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
-        [Test(Description = "Attempts to create a proxy to an interface that's generic.")]
+        [Fact]
         public void CreateWcfProxy_InterfaceToProxyIsGeneric()
         {
             var generator = new ServiceHostProxyGenerator();
@@ -55,7 +53,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
             Assert.Throws<ArgumentException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
-        [Test(Description = "Attempts to create a proxy to a null interface type.")]
+        [Fact]
         public void CreateWcfProxy_NullInterface()
         {
             var generator = new ServiceHostProxyGenerator();
@@ -64,7 +62,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
             Assert.Throws<ArgumentNullException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
-        [Test(Description = "Attempts to create a proxy to a null target.")]
+        [Fact]
         public void CreateWcfProxy_NullTarget()
         {
             var generator = new ServiceHostProxyGenerator();
@@ -73,7 +71,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
             Assert.Throws<ArgumentNullException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
-        [Test(Description = "Attempts to create a proxy to a target that does not implement the interface.")]
+        [Fact]
         public void CreateWcfProxy_TargetDoesNotImplementInterface()
         {
             var generator = new ServiceHostProxyGenerator();
@@ -104,6 +102,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         private class ServiceImplementation : IServiceContract
         {
             public bool ProxyMethodCalled { get; set; }
+
             public void MethodToProxy()
             {
                 this.ProxyMethodCalled = true;

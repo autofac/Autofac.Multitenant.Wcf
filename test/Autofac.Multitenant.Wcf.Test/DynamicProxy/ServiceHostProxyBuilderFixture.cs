@@ -1,36 +1,35 @@
 ﻿using System;
 using Autofac.Multitenant.Wcf.DynamicProxy;
 using Castle.DynamicProxy.Generators;
-using NUnit.Framework;
+using Xunit;
 
 namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
 {
-    [TestFixture]
     public class ServiceHostProxyBuilderFixture
     {
-        [Test(Description = "Builds a proxy type.")]
+        [Fact]
         public void CreateWcfProxyType_BuildsProxyType()
         {
             var builder = new ServiceHostProxyBuilder();
             var type = builder.CreateWcfProxyType(typeof(ValidType));
-            Assert.IsNotNull(type, "The generated type should not be null.");
+            Assert.NotNull(type);
         }
 
-        [Test(Description = "Attempts to build a proxy type based on a null input.")]
+        [Fact]
         public void CreateWcfProxyType_NullTypeToProxy()
         {
             var builder = new ServiceHostProxyBuilder();
             Assert.Throws<ArgumentNullException>(() => builder.CreateWcfProxyType(null));
         }
 
-        [Test(Description = "Attempts to build a proxy type based on a generic type.")]
+        [Fact]
         public void CreateWcfProxyType_TypeIsGeneric()
         {
             var builder = new ServiceHostProxyBuilder();
             Assert.Throws<GeneratorException>(() => builder.CreateWcfProxyType(typeof(GenericType<>)));
         }
 
-        [Test(Description = "Attempts to build a proxy type based on a non-public type.")]
+        [Fact]
         public void CreateWcfProxyType_TypeNotAccessible()
         {
             var builder = new ServiceHostProxyBuilder();
