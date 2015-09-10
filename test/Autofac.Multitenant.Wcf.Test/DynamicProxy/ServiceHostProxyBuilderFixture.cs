@@ -1,9 +1,9 @@
 ﻿using System;
-using Autofac.Extras.Multitenant.Wcf.DynamicProxy;
+using Autofac.Multitenant.Wcf.DynamicProxy;
 using Castle.DynamicProxy.Generators;
 using NUnit.Framework;
 
-namespace Autofac.Extras.Tests.Multitenant.Wcf.DynamicProxy
+namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
 {
     [TestFixture]
     public class ServiceHostProxyBuilderFixture

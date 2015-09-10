@@ -3,11 +3,11 @@ using System.Globalization;
 using System.Security;
 using System.ServiceModel;
 using Autofac;
-using Autofac.Extras.Multitenant.Wcf.DynamicProxy;
-using Autofac.Extras.Multitenant.Wcf.Properties;
+using Autofac.Multitenant.Wcf.DynamicProxy;
+using Autofac.Multitenant.Wcf.Properties;
 using Autofac.Integration.Wcf;
 
-namespace Autofac.Extras.Multitenant.Wcf
+namespace Autofac.Multitenant.Wcf
 {
     /// <summary>
     /// Service implementation data provider that returns multitenant-aware

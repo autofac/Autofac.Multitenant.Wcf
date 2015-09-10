@@ -8,8 +8,8 @@
     <ProjectGuid>{50EA8D8F-AD48-4212-92F7-5A816183DC06}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Autofac.Extras.Tests.Multitenant.Wcf</RootNamespace>
-    <AssemblyName>Autofac.Extras.Tests.Multitenant.Wcf</AssemblyName>
+    <RootNamespace>Autofac.Multitenant.Wcf.Test</RootNamespace>
+    <AssemblyName>Autofac.Multitenant.Wcf.Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\Autofac.snk</AssemblyOriginatorKeyFile>
@@ -77,9 +77,9 @@
     <Compile Include="TenantPropagationMessageInspectorFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Autofac.Extras.Multitenant.Wcf\Autofac.Extras.Multitenant.Wcf.csproj">
+    <ProjectReference Include="..\..\src\Autofac.Multitenant.Wcf\Autofac.Multitenant.Wcf.csproj">
       <Project>{760cfe4c-3320-4d33-a812-66728ef0b30a}</Project>
-      <Name>Autofac.Extras.Multitenant.Wcf</Name>
+      <Name>Autofac.Multitenant.Wcf</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +89,7 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

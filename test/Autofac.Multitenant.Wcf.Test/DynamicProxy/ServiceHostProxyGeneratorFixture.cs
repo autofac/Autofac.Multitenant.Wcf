@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ServiceModel;
-using Autofac.Extras.Multitenant.Wcf.DynamicProxy;
+using Autofac.Multitenant.Wcf.DynamicProxy;
 using NUnit.Framework;
 
-namespace Autofac.Extras.Tests.Multitenant.Wcf.DynamicProxy
+namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
 {
     [TestFixture]
     public class ServiceHostProxyGeneratorFixture

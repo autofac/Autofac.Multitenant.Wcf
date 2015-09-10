@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ServiceModel;
 using Autofac;
-using Autofac.Extras.Multitenant.Wcf;
+using Autofac.Multitenant.Wcf;
 using NUnit.Framework;
 
-namespace Autofac.Extras.Tests.Multitenant.Wcf
+namespace Autofac.Multitenant.Wcf.Test
 {
     [TestFixture]
     public class MultitenantServiceImplementationDataProviderFixture

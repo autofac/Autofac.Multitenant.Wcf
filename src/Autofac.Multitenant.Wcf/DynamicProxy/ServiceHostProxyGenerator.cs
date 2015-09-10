@@ -2,10 +2,10 @@
 using System.Globalization;
 using System.Security;
 using System.ServiceModel;
-using Autofac.Extras.Multitenant.Wcf.Properties;
+using Autofac.Multitenant.Wcf.Properties;
 using Castle.DynamicProxy;
 
-namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
+namespace Autofac.Multitenant.Wcf.DynamicProxy
 {
     /// <summary>
     /// Proxy generator used in multitenant service hosting.
@@ -22,14 +22,14 @@ namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
     /// service contracts.
     /// </para>
     /// <para>
-    /// The proxy generator uses a <see cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.ServiceHostProxyBuilder"/>
+    /// The proxy generator uses a <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostProxyBuilder"/>
     /// to build the proxy types. This is specifically interesting in the
-    /// <see cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.ServiceHostProxyGenerator.CreateWcfProxy"/>
+    /// <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostProxyGenerator.CreateWcfProxy"/>
     /// method, which uses some special overrides and additions in the builder.
     /// </para>
     /// <para>
     /// The builder, when called through
-    /// <see cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.ServiceHostProxyGenerator.CreateWcfProxy"/>,
+    /// <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostProxyGenerator.CreateWcfProxy"/>,
     /// generates proxy types that ignore non-inherited
     /// attributes on the service interface (e.g.,
     /// <see cref="System.ServiceModel.ServiceContractAttribute"/>)
@@ -45,7 +45,7 @@ namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
         /// </summary>
         /// <remarks>
         /// <para>
-        /// The proxy generator uses a <see cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.ServiceHostProxyBuilder"/>
+        /// The proxy generator uses a <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostProxyBuilder"/>
         /// to build the proxy types.
         /// </para>
         /// </remarks>

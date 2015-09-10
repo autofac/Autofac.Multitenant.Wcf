@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
+namespace Autofac.Multitenant.Wcf.DynamicProxy
 {
     /// <summary>
     /// Extension methods for <see cref="System.Reflection.CustomAttributeData"/>.

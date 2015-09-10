@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Extras.Multitenant.Wcf", "src\Autofac.Extras.Multitenant.Wcf\Autofac.Extras.Multitenant.Wcf.csproj", "{760CFE4C-3320-4D33-A812-66728EF0B30A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Multitenant.Wcf", "src\Autofac.Multitenant.Wcf\Autofac.Multitenant.Wcf.csproj", "{760CFE4C-3320-4D33-A812-66728EF0B30A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Extras.Tests.Multitenant.Wcf", "test\Autofac.Extras.Tests.Multitenant.Wcf\Autofac.Extras.Tests.Multitenant.Wcf.csproj", "{50EA8D8F-AD48-4212-92F7-5A816183DC06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Multitenant.Wcf.Test", "test\Autofac.Multitenant.Wcf.Test\Autofac.Multitenant.Wcf.Test.csproj", "{50EA8D8F-AD48-4212-92F7-5A816183DC06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

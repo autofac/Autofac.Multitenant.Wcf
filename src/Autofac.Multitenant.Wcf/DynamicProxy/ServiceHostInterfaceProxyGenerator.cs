@@ -6,7 +6,7 @@ using Castle.DynamicProxy.Generators;
 using Castle.DynamicProxy.Generators.Emitters;
 using Castle.DynamicProxy.Internal;
 
-namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
+namespace Autofac.Multitenant.Wcf.DynamicProxy
 {
     /// <summary>
     /// Interface proxy generator that builds a proxy that has a default constructor
@@ -27,12 +27,12 @@ namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
     /// from the target interface, which causes WCF to choke on the
     /// <see cref="System.ServiceModel.ServiceContractAttribute"/>, which is
     /// already on the service contract interface. This generator overrides
-    /// <see cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator.GetTypeImplementerMapping"/>
+    /// <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator.GetTypeImplementerMapping"/>
     /// to change the set of code generating contributors to make a slimmer
     /// proxy that WCF hosting will accept.
     /// </para>
     /// </remarks>
-    /// <seealso cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
+    /// <seealso cref="Autofac.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
     public class ServiceHostInterfaceProxyGenerator : InterfaceProxyWithTargetInterfaceGenerator
     {
         /// <summary>
@@ -67,7 +67,7 @@ namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
         /// <remarks>
         /// <para>
         /// This override calls the base functionality and then uses the metadata
-        /// buddy class (as specified by a <see cref="Autofac.Extras.Multitenant.Wcf.ServiceMetadataTypeAttribute"/>
+        /// buddy class (as specified by a <see cref="Autofac.Multitenant.Wcf.ServiceMetadataTypeAttribute"/>
         /// on the service interface) to copy over class-level attributes to the
         /// dynamic hosting proxy.
         /// </para>
@@ -140,13 +140,13 @@ namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
         /// the <see cref="System.ServiceModel.ServiceContractAttribute"/>. The
         /// concrete proxy type can't have that attribute because the interface
         /// already has it, so WCF hosting dies. This version of the method uses
-        /// the <see cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
+        /// the <see cref="Autofac.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
         /// which does not copy over non-inherited attributes.
         /// </description>
         /// </item>
         /// </list>
         /// </remarks>
-        /// <seealso cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
+        /// <seealso cref="Autofac.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
         protected override IEnumerable<Type> GetTypeImplementerMapping(Type[] interfaces, Type proxyTargetType, out IEnumerable<ITypeContributor> contributors, INamingScope namingScope)
         {
             var typeImplementerMapping = new Dictionary<Type, ITypeContributor>();

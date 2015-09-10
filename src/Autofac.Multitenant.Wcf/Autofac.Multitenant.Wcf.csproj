@@ -8,8 +8,8 @@
     <ProjectGuid>{760CFE4C-3320-4D33-A812-66728EF0B30A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Autofac.Extras.Multitenant.Wcf</RootNamespace>
-    <AssemblyName>Autofac.Extras.Multitenant.Wcf</AssemblyName>
+    <RootNamespace>Autofac.Multitenant.Wcf</RootNamespace>
+    <AssemblyName>Autofac.Multitenant.Wcf</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\Autofac.snk</AssemblyOriginatorKeyFile>
@@ -28,7 +28,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\..\Full.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Debug\Autofac.Extras.Multitenant.Wcf.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Autofac.Multitenant.Wcf.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -39,7 +39,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\..\Full.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\Release\Autofac.Extras.Multitenant.Wcf.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Autofac.Multitenant.Wcf.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
@@ -99,11 +99,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Autofac.Extras.Multitenant.Wcf.nuspec" />
+    <None Include="Autofac.Multitenant.Wcf.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

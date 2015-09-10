@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Globalization;
 using System.Security;
-using Autofac.Extras.Multitenant.Wcf.Properties;
+using Autofac.Multitenant.Wcf.Properties;
 using Castle.DynamicProxy;
 using Castle.DynamicProxy.Generators;
 using Castle.DynamicProxy.Internal;
 
-namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
+namespace Autofac.Multitenant.Wcf.DynamicProxy
 {
     /// <summary>
     /// Proxy builder that has an additional method to create proxies usable
@@ -15,7 +15,7 @@ namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
     /// <remarks>
     /// <para>
     /// The primary point of interest in this builder type is the
-    /// <see cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.ServiceHostProxyBuilder.CreateWcfProxyType"/>
+    /// <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostProxyBuilder.CreateWcfProxyType"/>
     /// method, which is used to create an interface proxy type that is hostable
     /// by WCF.
     /// </para>
@@ -64,12 +64,12 @@ namespace Autofac.Extras.Multitenant.Wcf.DynamicProxy
         /// <remarks>
         /// <para>
         /// This proxy type creation method uses the
-        /// <see cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator"/>
+        /// <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator"/>
         /// to create the service host proxy type. As this is a very specialized
         /// proxy type, it does not take options like other proxy types.
         /// </para>
         /// </remarks>
-        /// <seealso cref="Autofac.Extras.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator" />
+        /// <seealso cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator" />
         public virtual Type CreateWcfProxyType(Type interfaceToProxy)
         {
             if (interfaceToProxy == null)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Autofac.Extras.Multitenant.Wcf
+namespace Autofac.Multitenant.Wcf
 {
     /// <summary>
     /// Specifies the metadata class to associate with a service implementation.
