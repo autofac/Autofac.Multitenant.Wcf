@@ -2,10 +2,9 @@
 using System.Globalization;
 using System.Security;
 using System.ServiceModel;
-using Autofac;
+using Autofac.Integration.Wcf;
 using Autofac.Multitenant.Wcf.DynamicProxy;
 using Autofac.Multitenant.Wcf.Properties;
-using Autofac.Integration.Wcf;
 
 namespace Autofac.Multitenant.Wcf
 {
@@ -62,6 +61,7 @@ namespace Autofac.Multitenant.Wcf
             {
                 throw new ArgumentNullException("value");
             }
+
             if (value.Length == 0)
             {
                 throw new ArgumentException(String.Format(CultureInfo.CurrentUICulture, Properties.Resources.ArgumentException_StringEmpty, "value"));
