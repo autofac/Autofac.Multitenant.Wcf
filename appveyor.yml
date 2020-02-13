@@ -2,6 +2,8 @@ environment:
   package_semantic_version: 5.0.0
   assembly_semantic_version: 5.0.0
 
+image: Visual Studio 2019
+
 version: $(package_semantic_version).{build}
 
 assembly_info:
