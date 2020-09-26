@@ -1,11 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Multitenant.Wcf", "src\Autofac.Multitenant.Wcf\Autofac.Multitenant.Wcf.csproj", "{760CFE4C-3320-4D33-A812-66728EF0B30A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Multitenant.Wcf", "src\Autofac.Multitenant.Wcf\Autofac.Multitenant.Wcf.csproj", "{760CFE4C-3320-4D33-A812-66728EF0B30A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Multitenant.Wcf.Test", "test\Autofac.Multitenant.Wcf.Test\Autofac.Multitenant.Wcf.Test.csproj", "{50EA8D8F-AD48-4212-92F7-5A816183DC06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autofac.Multitenant.Wcf.Test", "test\Autofac.Multitenant.Wcf.Test\Autofac.Multitenant.Wcf.Test.csproj", "{50EA8D8F-AD48-4212-92F7-5A816183DC06}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98F87223-9837-4B9F-AC31-C35374845B71}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		codecov.yml = codecov.yml
+		NuGet.Config = NuGet.Config
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C3FDD0D7-FCFC-433D-84C3-106D0249E6B4}
 	EndGlobalSection
 EndGlobal

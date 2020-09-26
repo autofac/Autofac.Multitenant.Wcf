@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
+using System;
+using System.ServiceModel;
 using Castle.DynamicProxy;
 using Castle.DynamicProxy.Contributors;
 using Castle.DynamicProxy.Generators.Emitters;
@@ -11,13 +15,13 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The default behavior of <see cref="Castle.DynamicProxy.Contributors.InterfaceProxyInstanceContributor"/>
+    /// The default behavior of <see cref="InterfaceProxyInstanceContributor"/>
     /// is to generate a type definition that copies over all of the non-inherited
-    /// attributes from the target interface. This includes the <see cref="System.ServiceModel.ServiceContractAttribute"/>
+    /// attributes from the target interface. This includes the <see cref="ServiceContractAttribute"/>
     /// that would be copied over from service interfaces. Unfortunately, WCF
-    /// doesn't allow a type marked with <see cref="System.ServiceModel.ServiceContractAttribute"/>
-    /// to also implement an interface marked with <see cref="System.ServiceModel.ServiceContractAttribute"/>.
-    /// This code generator does everything that <see cref="Castle.DynamicProxy.Contributors.InterfaceProxyInstanceContributor"/>
+    /// doesn't allow a type marked with <see cref="ServiceContractAttribute"/>
+    /// to also implement an interface marked with <see cref="ServiceContractAttribute"/>.
+    /// This code generator does everything that <see cref="InterfaceProxyInstanceContributor"/>
     /// does except it doesn't copy over type-level non-inherited attributes.
     /// </para>
     /// </remarks>
@@ -38,17 +42,17 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
         /// Generates the class defined by the provided class emitter.
         /// </summary>
         /// <param name="class">
-        /// The <see cref="Castle.DynamicProxy.Generators.Emitters.ClassEmitter"/>
+        /// The <see cref="ClassEmitter"/>
         /// being used to build the target type.
         /// </param>
         /// <param name="options">The options to use during proxy generation.</param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="class" /> is <see langword="null" />.
         /// </exception>
         /// <remarks>
         /// <para>
         /// This overridden version of the method does everything that the base
-        /// <see cref="Castle.DynamicProxy.Contributors.ProxyInstanceContributor.Generate"/>
+        /// <see cref="ProxyInstanceContributor.Generate"/>
         /// method does but it skips the part where it checks for non-inherited
         /// attributes and copies them over from the proxy target.
         /// </para>
@@ -57,8 +61,9 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
         {
             if (@class == null)
             {
-                throw new ArgumentNullException("class");
+                throw new ArgumentNullException(nameof(@class));
             }
+
             FieldReference field = @class.GetField("__interceptors");
             this.ImplementGetObjectData(@class);
             this.ImplementProxyTargetAccessor(@class, field);

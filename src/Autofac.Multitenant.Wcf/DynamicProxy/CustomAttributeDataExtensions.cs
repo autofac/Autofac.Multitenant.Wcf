@@ -1,3 +1,6 @@
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -6,7 +9,7 @@ using System.Reflection.Emit;
 namespace Autofac.Multitenant.Wcf.DynamicProxy
 {
     /// <summary>
-    /// Extension methods for <see cref="System.Reflection.CustomAttributeData"/>.
+    /// Extension methods for <see cref="CustomAttributeData"/>.
     /// </summary>
     public static class CustomAttributeDataExtensions
     {
@@ -15,18 +18,18 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
         /// </summary>
         /// <param name="data">The data about a custom attribute to be converted for code emission.</param>
         /// <returns>
-        /// A <see cref="System.Reflection.Emit.CustomAttributeBuilder"/> with
+        /// A <see cref="CustomAttributeBuilder"/> with
         /// the same values as <paramref name="data" /> so it can be copied
         /// to another member in code generation.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="data" /> is <see langword="null" />.
         /// </exception>
         public static CustomAttributeBuilder ToAttributeBuilder(this CustomAttributeData data)
         {
             if (data == null)
             {
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
             }
 
             var constructorArguments = new List<object>();
@@ -55,6 +58,7 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
                     propertyArgumentValues.Add(namedArg.TypedValue.Value);
                 }
             }
+
             return new CustomAttributeBuilder(data.Constructor, constructorArguments.ToArray(), propertyArguments.ToArray(), propertyArgumentValues.ToArray(), fieldArguments.ToArray(), fieldArgumentValues.ToArray());
         }
     }
