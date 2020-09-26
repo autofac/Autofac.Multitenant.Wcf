@@ -45,7 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="6.0.0-develop-01141" />
     <PackageReference Include="Autofac.Multitenant" Version="6.0.0-develop-00294" />
     <PackageReference Include="Autofac.Wcf" Version="6.0.0-develop-00282" />
     <PackageReference Include="Castle.Core" Version="4.4.1" />
