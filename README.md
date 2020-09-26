@@ -2,7 +2,7 @@
 
 Multitenant Windows Communication Foundation (WCF) enhancements for Autofac IoC
 
-[![Build status](https://ci.appveyor.com/api/projects/status/8v18c4umyxbx3ush?svg=true)](https://ci.appveyor.com/project/Autofac/autofac-multitenant-wcf)
+[![Build status](https://ci.appveyor.com/api/projects/status/8v18c4umyxbx3ush?svg=true)](https://ci.appveyor.com/project/Autofac/autofac-multitenant-wcf) [![codecov](https://codecov.io/gh/Autofac/Autofac.Multitenant.Wcf/branch/develop/graph/badge.svg)](https://codecov.io/gh/Autofac/Autofac.Multitenant.Wcf)
 
 Please file issues and pull requests for this package in this repository rather than in the Autofac core repo.
 
