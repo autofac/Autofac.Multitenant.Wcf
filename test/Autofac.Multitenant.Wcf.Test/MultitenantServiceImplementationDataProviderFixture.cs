@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
+using System;
 using System.ServiceModel;
 using Xunit;
 
@@ -17,7 +20,7 @@ namespace Autofac.Multitenant.Wcf.Test
         public void GetServiceImplementationData_ConstructorStringDoesNotResolveToInterface()
         {
             var provider = new MultitenantServiceImplementationDataProvider();
-            Assert.Throws<InvalidOperationException>(() => provider.GetServiceImplementationData(typeof(Object).AssemblyQualifiedName));
+            Assert.Throws<InvalidOperationException>(() => provider.GetServiceImplementationData(typeof(object).AssemblyQualifiedName));
         }
 
         [Fact]
@@ -33,7 +36,7 @@ namespace Autofac.Multitenant.Wcf.Test
             var provider = new MultitenantServiceImplementationDataProvider();
             var data = provider.GetServiceImplementationData(typeof(IServiceContract).AssemblyQualifiedName);
             Assert.Equal(typeof(IServiceContract).AssemblyQualifiedName, data.ConstructorString);
-            Assert.Equal(1, data.ServiceTypeToHost.FindInterfaces((f, o) => f == (Type)o, typeof(IServiceContract)).Length);
+            Assert.Single(data.ServiceTypeToHost.FindInterfaces((f, o) => f == (Type)o, typeof(IServiceContract)));
         }
 
         [Fact]

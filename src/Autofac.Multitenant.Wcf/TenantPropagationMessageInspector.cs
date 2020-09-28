@@ -1,10 +1,11 @@
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
-using Autofac;
-using System.Diagnostics.CodeAnalysis;
-using Autofac.Multitenant;
 
 namespace Autofac.Multitenant.Wcf
 {
@@ -18,20 +19,20 @@ namespace Autofac.Multitenant.Wcf
     /// </typeparam>
     /// <remarks>
     /// <para>
-    /// Use this in conjunction with the <see cref="Autofac.Multitenant.Wcf.TenantPropagationBehavior{TTenantId}"/>
+    /// Use this in conjunction with the <see cref="TenantPropagationBehavior{TTenantId}"/>
     /// to automatically get the tenant ID on the WCF client end, add the ID
     /// to a header on the outbound message, and have the tenant ID read from
     /// headers on the service side and added to the operation context in an
-    /// <see cref="Autofac.Multitenant.Wcf.TenantIdentificationContextExtension"/>.
+    /// <see cref="TenantIdentificationContextExtension"/>.
     /// This allows you, on the service side, to use the
-    /// <see cref="Autofac.Multitenant.Wcf.OperationContextTenantIdentificationStrategy"/>
-    /// as your registered <see cref="Autofac.Multitenant.ITenantIdentificationStrategy"/>.
+    /// <see cref="OperationContextTenantIdentificationStrategy"/>
+    /// as your registered <see cref="ITenantIdentificationStrategy"/>.
     /// </para>
     /// <para>
-    /// For a usage example, see <see cref="Autofac.Multitenant.Wcf.TenantPropagationBehavior{TTenantId}"/>.
+    /// For a usage example, see <see cref="TenantPropagationBehavior{TTenantId}"/>.
     /// </para>
     /// </remarks>
-    /// <seealso cref="Autofac.Multitenant.Wcf.TenantPropagationBehavior{TTenantId}"/>
+    /// <seealso cref="TenantPropagationBehavior{TTenantId}"/>
     public class TenantPropagationMessageInspector<TTenantId> : IClientMessageInspector, IDispatchMessageInspector
     {
         /// <summary>
@@ -48,27 +49,28 @@ namespace Autofac.Multitenant.Wcf
         /// Gets the strategy used for identifying the current tenant.
         /// </summary>
         /// <value>
-        /// An <see cref="Autofac.Multitenant.ITenantIdentificationStrategy"/>
+        /// An <see cref="ITenantIdentificationStrategy"/>
         /// used to identify the current tenant from the execution context.
         /// </value>
-        public ITenantIdentificationStrategy TenantIdentificationStrategy { get; private set; }
+        public ITenantIdentificationStrategy TenantIdentificationStrategy { get; }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// <see cref="Autofac.Multitenant.Wcf.TenantPropagationMessageInspector{TTenantId}"/> class.
+        /// <see cref="TenantPropagationMessageInspector{TTenantId}"/> class.
         /// </summary>
         /// <param name="tenantIdentificationStrategy">
         /// The strategy to use for identifying the current tenant.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="tenantIdentificationStrategy" /> is <see langword="null" />.
         /// </exception>
         public TenantPropagationMessageInspector(ITenantIdentificationStrategy tenantIdentificationStrategy)
         {
             if (tenantIdentificationStrategy == null)
             {
-                throw new ArgumentNullException("tenantIdentificationStrategy");
+                throw new ArgumentNullException(nameof(tenantIdentificationStrategy));
             }
+
             this.TenantIdentificationStrategy = tenantIdentificationStrategy;
         }
 
@@ -89,7 +91,7 @@ namespace Autofac.Multitenant.Wcf
 
         /// <summary>
         /// Inspects inbound message headers and adds an
-        /// <see cref="Autofac.Multitenant.Wcf.TenantIdentificationContextExtension"/>
+        /// <see cref="TenantIdentificationContextExtension"/>
         /// to the current operation context with the tenant ID.
         /// </summary>
         /// <param name="request">The request message.</param>
@@ -99,26 +101,28 @@ namespace Autofac.Multitenant.Wcf
         /// Always returns <see langword="null" />. There is no correlation state
         /// value to be managed in this inspector.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="request" /> is <see langword="null" />.
         /// </exception>
         public object AfterReceiveRequest(ref Message request, IClientChannel channel, InstanceContext instanceContext)
         {
             if (request == null)
             {
-                throw new ArgumentNullException("request");
+                throw new ArgumentNullException(nameof(request));
             }
+
             var context = OperationContext.Current;
             try
             {
                 var tenantId = request.Headers.GetHeader<TTenantId>(TenantHeaderName, TenantHeaderNamespace);
-                context.Extensions.Add(new TenantIdentificationContextExtension() { TenantId = tenantId });
+                context.Extensions.Add(new TenantIdentificationContextExtension { TenantId = tenantId });
             }
             catch (MessageHeaderException)
             {
                 // The additional header won't be there when we update service
                 // references; only when the behavior is on the client end.
             }
+
             return null;
         }
 
@@ -131,7 +135,7 @@ namespace Autofac.Multitenant.Wcf
         /// Always returns <see langword="null" />. There is no correlation state
         /// value to be managed in this inspector.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="request" /> is <see langword="null" />.
         /// </exception>
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
@@ -139,21 +143,22 @@ namespace Autofac.Multitenant.Wcf
         {
             if (request == null)
             {
-                throw new ArgumentNullException("request");
+                throw new ArgumentNullException(nameof(request));
             }
+
             // ApplicationContainer is used rather than RequestLifetime because
             // you don't want individual tenants overriding the mechanism
             // that determines tenant.
-            object contextTenantId;
             TTenantId tenantId;
-            if (!this.TenantIdentificationStrategy.TryIdentifyTenant(out contextTenantId))
+            if (!this.TenantIdentificationStrategy.TryIdentifyTenant(out object contextTenantId))
             {
-                tenantId = default(TTenantId);
+                tenantId = default;
             }
             else
             {
                 tenantId = (TTenantId)contextTenantId;
             }
+
             MessageHeader tenantHeader = new MessageHeader<TTenantId>(tenantId).GetUntypedHeader(TenantHeaderName, TenantHeaderNamespace);
             request.Headers.Add(tenantHeader);
             return null;
@@ -169,7 +174,7 @@ namespace Autofac.Multitenant.Wcf
         /// </param>
         /// <param name="correlationState">
         /// The correlation object returned from the
-        /// <see cref="M:System.ServiceModel.Dispatcher.IDispatchMessageInspector.AfterReceiveRequest(System.ServiceModel.Channels.Message@,System.ServiceModel.IClientChannel,System.ServiceModel.InstanceContext)"/>
+        /// <see cref="IDispatchMessageInspector.AfterReceiveRequest"/>
         /// method.
         /// </param>
         public void BeforeSendReply(ref Message reply, object correlationState)

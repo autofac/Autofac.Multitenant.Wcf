@@ -1,11 +1,12 @@
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
 using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
-using Autofac;
-using Autofac.Multitenant;
 
 namespace Autofac.Multitenant.Wcf
 {
@@ -19,25 +20,25 @@ namespace Autofac.Multitenant.Wcf
     /// </typeparam>
     /// <remarks>
     /// <para>
-    /// This behavior applies the <see cref="Autofac.Multitenant.Wcf.TenantPropagationMessageInspector{TTenantId}"/>
+    /// This behavior applies the <see cref="TenantPropagationMessageInspector{TTenantId}"/>
     /// to WCF clients and service hosts to automatically get the tenant ID on
     /// the WCF client end, add the ID to a header on the outbound message, and
     /// have the tenant ID read from headers on the service side and added to the
     /// operation context in an
-    /// <see cref="Autofac.Multitenant.Wcf.TenantIdentificationContextExtension"/>.
+    /// <see cref="TenantIdentificationContextExtension"/>.
     /// This allows you, on the service side, to use the
-    /// <see cref="Autofac.Multitenant.Wcf.OperationContextTenantIdentificationStrategy"/>
-    /// as your registered <see cref="Autofac.Multitenant.ITenantIdentificationStrategy"/>.
+    /// <see cref="OperationContextTenantIdentificationStrategy"/>
+    /// as your registered <see cref="ITenantIdentificationStrategy"/>.
     /// </para>
     /// </remarks>
     /// <example>
     /// <para>
-    /// In the following examples, the tenant ID is a <see cref="System.String"/>,
+    /// In the following examples, the tenant ID is a <see cref="string"/>,
     /// so the <typeparamref name="TTenantId"/> in the examples corresponds.
     /// In your application, your tenant ID may be a nullable GUID or some other
     /// object, so you'd need to update accordingly. That would mean passing
     /// a different type as <typeparamref name="TTenantId"/> and implementing
-    /// a custom <see cref="Autofac.Multitenant.ITenantIdentificationStrategy"/>
+    /// a custom <see cref="ITenantIdentificationStrategy"/>
     /// that parses the appropriate tenant ID from the execution context.
     /// </para>
     /// <para>
@@ -105,7 +106,7 @@ namespace Autofac.Multitenant.Wcf
     /// <para>
     /// Note that much of the above code is the standard ASP.NET application
     /// wireup with Autofac. The important part is when you register the service
-    /// client - it needs to have a <see cref="Autofac.Multitenant.Wcf.TenantPropagationBehavior{TTenantId}"/>
+    /// client - it needs to have a <see cref="TenantPropagationBehavior{TTenantId}"/>
     /// attached to it that can get the container provider from the
     /// current application.
     /// </para>
@@ -147,35 +148,36 @@ namespace Autofac.Multitenant.Wcf
     /// container, and a behavior to get the tenant ID from the operation context.
     /// </para>
     /// </example>
-    /// <seealso cref="Autofac.Multitenant.Wcf.TenantPropagationMessageInspector{TTenantId}"/>
-    /// <seealso cref="Autofac.Multitenant.Wcf.OperationContextTenantIdentificationStrategy"/>
+    /// <seealso cref="TenantPropagationMessageInspector{TTenantId}"/>
+    /// <seealso cref="OperationContextTenantIdentificationStrategy"/>
     public class TenantPropagationBehavior<TTenantId> : IServiceBehavior, IEndpointBehavior
     {
         /// <summary>
         /// Gets the strategy used for identifying the current tenant.
         /// </summary>
         /// <value>
-        /// An <see cref="Autofac.Multitenant.ITenantIdentificationStrategy"/>
+        /// An <see cref="ITenantIdentificationStrategy"/>
         /// used to identify the current tenant from the execution context.
         /// </value>
-        public ITenantIdentificationStrategy TenantIdentificationStrategy { get; private set; }
+        public ITenantIdentificationStrategy TenantIdentificationStrategy { get; }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// <see cref="Autofac.Multitenant.Wcf.TenantPropagationBehavior{TTenantId}"/> class.
+        /// <see cref="TenantPropagationBehavior{TTenantId}"/> class.
         /// </summary>
         /// <param name="tenantIdentificationStrategy">
         /// The strategy to use for identifying the current tenant.
         /// </param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="tenantIdentificationStrategy" /> is <see langword="null" />.
         /// </exception>
         public TenantPropagationBehavior(ITenantIdentificationStrategy tenantIdentificationStrategy)
         {
             if (tenantIdentificationStrategy == null)
             {
-                throw new ArgumentNullException("tenantIdentificationStrategy");
+                throw new ArgumentNullException(nameof(tenantIdentificationStrategy));
             }
+
             this.TenantIdentificationStrategy = tenantIdentificationStrategy;
         }
 
@@ -204,7 +206,7 @@ namespace Autofac.Multitenant.Wcf
         }
 
         /// <summary>
-        /// Adds the <see cref="Autofac.Multitenant.Wcf.TenantPropagationMessageInspector{TTenantId}"/>
+        /// Adds the <see cref="TenantPropagationMessageInspector{TTenantId}"/>
         /// to the client.
         /// </summary>
         /// <param name="endpoint">The endpoint that is to be customized.</param>
@@ -216,26 +218,28 @@ namespace Autofac.Multitenant.Wcf
         {
             if (clientRuntime == null)
             {
-                throw new ArgumentNullException("clientRuntime");
+                throw new ArgumentNullException(nameof(clientRuntime));
             }
+
             clientRuntime.MessageInspectors.Add(new TenantPropagationMessageInspector<TTenantId>(this.TenantIdentificationStrategy));
         }
 
         /// <summary>
-        /// Adds the <see cref="Autofac.Multitenant.Wcf.TenantPropagationMessageInspector{TTenantId}"/>
+        /// Adds the <see cref="TenantPropagationMessageInspector{TTenantId}"/>
         /// to the service endpoints.
         /// </summary>
         /// <param name="serviceDescription">The service description.</param>
         /// <param name="serviceHostBase">The host that is currently being built.</param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="serviceHostBase" /> is <see langword="null" />.
         /// </exception>
         public virtual void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
         {
             if (serviceHostBase == null)
             {
-                throw new ArgumentNullException("serviceHostBase");
+                throw new ArgumentNullException(nameof(serviceHostBase));
             }
+
             foreach (ChannelDispatcher channelDispatcher in serviceHostBase.ChannelDispatchers)
             {
                 foreach (EndpointDispatcher endpointDispatcher in channelDispatcher.Endpoints)
