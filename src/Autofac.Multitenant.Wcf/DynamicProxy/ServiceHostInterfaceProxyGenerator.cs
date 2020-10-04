@@ -1,5 +1,9 @@
-﻿using System;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
+using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 using Castle.DynamicProxy;
 using Castle.DynamicProxy.Contributors;
 using Castle.DynamicProxy.Generators;
@@ -14,7 +18,7 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The standard <see cref="Castle.DynamicProxy.Generators.InterfaceProxyWithTargetInterfaceGenerator"/>
+    /// The standard <see cref="InterfaceProxyWithTargetInterfaceGenerator"/>
     /// builds a proxy object that has no default constructor. While a default
     /// constructor is not useful from an actual proxying standpoint, the WCF
     /// service host will only host object types that have default constructors.
@@ -22,17 +26,17 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
     /// proxy type has to have a default constructor.
     /// </para>
     /// <para>
-    /// Also, the standard <see cref="Castle.DynamicProxy.Generators.InterfaceProxyWithTargetInterfaceGenerator"/>
+    /// Also, the standard <see cref="InterfaceProxyWithTargetInterfaceGenerator"/>
     /// generates a type that copies all of the non-inherited attributes over
     /// from the target interface, which causes WCF to choke on the
-    /// <see cref="System.ServiceModel.ServiceContractAttribute"/>, which is
+    /// <see cref="ServiceContractAttribute"/>, which is
     /// already on the service contract interface. This generator overrides
-    /// <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator.GetTypeImplementerMapping"/>
+    /// <see cref="GetTypeImplementerMapping"/>
     /// to change the set of code generating contributors to make a slimmer
     /// proxy that WCF hosting will accept.
     /// </para>
     /// </remarks>
-    /// <seealso cref="Autofac.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
+    /// <seealso cref="IgnoreAttributeInterfaceProxyInstanceContributor"/>
     public class ServiceHostInterfaceProxyGenerator : InterfaceProxyWithTargetInterfaceGenerator
     {
         /// <summary>
@@ -67,25 +71,27 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
         /// <remarks>
         /// <para>
         /// This override calls the base functionality and then uses the metadata
-        /// buddy class (as specified by a <see cref="Autofac.Multitenant.Wcf.ServiceMetadataTypeAttribute"/>
+        /// buddy class (as specified by a <see cref="ServiceMetadataTypeAttribute"/>
         /// on the service interface) to copy over class-level attributes to the
         /// dynamic hosting proxy.
         /// </para>
         /// </remarks>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="emitter" /> is <see langword="null" />.
         /// </exception>
         protected override void CreateTypeAttributes(ClassEmitter emitter)
         {
             if (emitter == null)
             {
-                throw new ArgumentNullException("emitter");
+                throw new ArgumentNullException(nameof(emitter));
             }
+
             base.CreateTypeAttributes(emitter);
             if (_metadataBuddyType == null)
             {
                 return;
             }
+
             var attribs = _metadataBuddyType.GetCustomAttributesData();
             foreach (var attrib in attribs)
             {
@@ -113,7 +119,7 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
         /// <item>
         /// <term>No mixin support</term>
         /// <description>
-        /// The original version of the method looks at the <see cref="Castle.DynamicProxy.Generators.BaseProxyGenerator.ProxyGenerationOptions"/>
+        /// The original version of the method looks at the <see cref="BaseProxyGenerator.ProxyGenerationOptions"/>
         /// to see if there are any mixins to be added to the generated proxy.
         /// There is no need for mixin support in WCF service hosting so mixins
         /// aren't even checked for and won't be added.
@@ -134,19 +140,19 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
         /// <term>Custom instance contributor used</term>
         /// <description>
         /// The original version of the method uses the
-        /// <see cref="Castle.DynamicProxy.Contributors.InterfaceProxyInstanceContributor"/>
+        /// <see cref="InterfaceProxyInstanceContributor"/>
         /// as the code generator for the proxy type. Unfortunately, that contributor
         /// copies over all non-inherited attributes on the interface including
-        /// the <see cref="System.ServiceModel.ServiceContractAttribute"/>. The
+        /// the <see cref="ServiceContractAttribute"/>. The
         /// concrete proxy type can't have that attribute because the interface
         /// already has it, so WCF hosting dies. This version of the method uses
-        /// the <see cref="Autofac.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
+        /// the <see cref="IgnoreAttributeInterfaceProxyInstanceContributor"/>
         /// which does not copy over non-inherited attributes.
         /// </description>
         /// </item>
         /// </list>
         /// </remarks>
-        /// <seealso cref="Autofac.Multitenant.Wcf.DynamicProxy.IgnoreAttributeInterfaceProxyInstanceContributor"/>
+        /// <seealso cref="IgnoreAttributeInterfaceProxyInstanceContributor"/>
         protected override IEnumerable<Type> GetTypeImplementerMapping(Type[] interfaces, Type proxyTargetType, out IEnumerable<ITypeContributor> contributors, INamingScope namingScope)
         {
             var typeImplementerMapping = new Dictionary<Type, ITypeContributor>();
@@ -163,6 +169,7 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
             {
                 HandleExplicitlyPassedProxyTargetAccessor(allInterfaces, additionalInterfaces);
             }
+
             contributors = new List<ITypeContributor> { implementer, instance };
             return typeImplementerMapping.Keys;
         }

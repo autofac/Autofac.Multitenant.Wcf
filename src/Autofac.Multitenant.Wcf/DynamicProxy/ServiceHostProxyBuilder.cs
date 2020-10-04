@@ -1,10 +1,12 @@
-﻿using System;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
+using System;
 using System.Globalization;
 using System.Security;
 using Autofac.Multitenant.Wcf.Properties;
 using Castle.DynamicProxy;
 using Castle.DynamicProxy.Generators;
-using Castle.DynamicProxy.Internal;
 
 namespace Autofac.Multitenant.Wcf.DynamicProxy
 {
@@ -15,7 +17,7 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
     /// <remarks>
     /// <para>
     /// The primary point of interest in this builder type is the
-    /// <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostProxyBuilder.CreateWcfProxyType"/>
+    /// <see cref="CreateWcfProxyType"/>
     /// method, which is used to create an interface proxy type that is hostable
     /// by WCF.
     /// </para>
@@ -33,22 +35,21 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
         {
             // This is copied from the DefaultProxyBuilder because we need to
             // validate types but the validation logic is not accessible.
+            var isTargetNested = target.IsNested;
+            var isNestedAndInternal = isTargetNested && (target.IsNestedAssembly || target.IsNestedFamORAssem);
+            var isInternalNotNested = target.IsVisible == false && isTargetNested == false;
 
-            bool isTargetNested = target.IsNested;
-            bool isNestedAndInternal = isTargetNested && (target.IsNestedAssembly || target.IsNestedFamORAssem);
-            bool isInternalNotNested = target.IsVisible == false && isTargetNested == false;
-
-            bool internalAndVisibleToDynProxy = (isInternalNotNested || isNestedAndInternal) &&
-            InternalsUtil.IsInternalToDynamicProxy(target.Assembly);
+            var internalAndVisibleToDynProxy = (isInternalNotNested || isNestedAndInternal) && ProxyUtil.IsAccessible(target);
             var isAccessible = target.IsPublic || target.IsNestedPublic || internalAndVisibleToDynProxy;
 
             if (!isAccessible)
             {
-                throw new GeneratorException(String.Format(CultureInfo.CurrentUICulture, Resources.DynamicProxy_InterfaceTypeToProxyNotPublic, target.FullName));
+                throw new GeneratorException(string.Format(CultureInfo.CurrentCulture, Resources.DynamicProxy_InterfaceTypeToProxyNotPublic, target.FullName));
             }
+
             if (target.IsGenericTypeDefinition)
             {
-                throw new GeneratorException(String.Format(CultureInfo.CurrentUICulture, Resources.DynamicProxy_InterfaceTypeToProxyIsGeneric, target.FullName));
+                throw new GeneratorException(string.Format(CultureInfo.CurrentCulture, Resources.DynamicProxy_InterfaceTypeToProxyIsGeneric, target.FullName));
             }
         }
 
@@ -57,25 +58,26 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy
         /// </summary>
         /// <param name="interfaceToProxy">The service interface to proxy.</param>
         /// <returns>
-        /// A <see cref="System.Type"/> that is a proxy for the interface specified
+        /// A <see cref="Type"/> that is a proxy for the interface specified
         /// by <paramref name="interfaceToProxy" /> that will be able to be
         /// hosted by WCF.
         /// </returns>
         /// <remarks>
         /// <para>
         /// This proxy type creation method uses the
-        /// <see cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator"/>
+        /// <see cref="ServiceHostInterfaceProxyGenerator"/>
         /// to create the service host proxy type. As this is a very specialized
         /// proxy type, it does not take options like other proxy types.
         /// </para>
         /// </remarks>
-        /// <seealso cref="Autofac.Multitenant.Wcf.DynamicProxy.ServiceHostInterfaceProxyGenerator" />
+        /// <seealso cref="ServiceHostInterfaceProxyGenerator" />
         public virtual Type CreateWcfProxyType(Type interfaceToProxy)
         {
             if (interfaceToProxy == null)
             {
-                throw new ArgumentNullException("interfaceToProxy");
+                throw new ArgumentNullException(nameof(interfaceToProxy));
             }
+
             AssertValidType(interfaceToProxy);
             var generator = new ServiceHostInterfaceProxyGenerator(ModuleScope, interfaceToProxy) { Logger = Logger };
             return generator.GenerateCode(interfaceToProxy, null, ProxyGenerationOptions.Default);

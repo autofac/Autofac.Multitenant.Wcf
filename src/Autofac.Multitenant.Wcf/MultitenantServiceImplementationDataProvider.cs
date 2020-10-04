@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
+using System;
 using System.Globalization;
 using System.Security;
 using System.ServiceModel;
@@ -30,7 +33,7 @@ namespace Autofac.Multitenant.Wcf
         /// implementation.
         /// </param>
         /// <returns>
-        /// A <see cref="Autofac.Integration.Wcf.ServiceImplementationData"/>
+        /// A <see cref="ServiceImplementationData"/>
         /// object containing information about which type to use in
         /// the service host and how to resolve the implementation.
         /// </returns>
@@ -44,41 +47,43 @@ namespace Autofac.Multitenant.Wcf
         /// rather than an actual implementation type.
         /// </para>
         /// </remarks>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="value" /> is <see langword="null" />.
         /// </exception>
-        /// <exception cref="System.ArgumentException">
+        /// <exception cref="ArgumentException">
         /// Thrown if <paramref name="value" /> is empty.
         /// </exception>
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="InvalidOperationException">
         /// Thrown if <paramref name="value" /> does not resolve into
         /// a known type, resolves to a type that is not an interface, or the
-        /// interface it resolves to is not marked with a <see cref="System.ServiceModel.ServiceContractAttribute"/>.
+        /// interface it resolves to is not marked with a <see cref="ServiceContractAttribute"/>.
         /// </exception>
         public ServiceImplementationData GetServiceImplementationData(string value)
         {
             if (value == null)
             {
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(nameof(value));
             }
 
             if (value.Length == 0)
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentUICulture, Properties.Resources.ArgumentException_StringEmpty, "value"));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ArgumentException_StringEmpty, nameof(value)));
             }
 
             Type serviceInterfaceType = Type.GetType(value, false);
             if (serviceInterfaceType == null)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentUICulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotResolvable, value));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotResolvable, value));
             }
+
             if (!serviceInterfaceType.IsInterface)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentUICulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotInterface, value, serviceInterfaceType));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotInterface, value, serviceInterfaceType));
             }
+
             if (serviceInterfaceType.GetCustomAttributes(typeof(ServiceContractAttribute), false).Length == 0)
             {
-                throw new InvalidOperationException(String.Format(CultureInfo.CurrentUICulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotServiceContract, value, serviceInterfaceType));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotServiceContract, value, serviceInterfaceType));
             }
 
             // To create the actual proxy object type that will be used to sub-in
@@ -95,18 +100,19 @@ namespace Autofac.Multitenant.Wcf
             var dummyHostProxyObject = _generator.CreateInterfaceProxyWithoutTarget(serviceInterfaceType);
             var actualHostProxyObject = _generator.CreateWcfProxy(serviceInterfaceType, dummyHostProxyObject);
 
-            return new ServiceImplementationData()
+            return new ServiceImplementationData
             {
                 ConstructorString = value,
                 ServiceTypeToHost = actualHostProxyObject.GetType(),
                 ImplementationResolver = l =>
-                    {
-                        var implementation = l.Resolve(serviceInterfaceType);
-                        // The wrapped implementation will be of the same proxy
-                        // type as "actualHostProxyObject" above.
-                        var implementationProxy = _generator.CreateWcfProxy(serviceInterfaceType, implementation);
-                        return implementationProxy;
-                    }
+                {
+                    var implementation = l.Resolve(serviceInterfaceType);
+
+                    // The wrapped implementation will be of the same proxy
+                    // type as "actualHostProxyObject" above.
+                    var implementationProxy = _generator.CreateWcfProxy(serviceInterfaceType, implementation);
+                    return implementationProxy;
+                },
             };
         }
     }

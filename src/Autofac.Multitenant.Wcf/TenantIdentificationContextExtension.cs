@@ -1,43 +1,45 @@
-﻿using System;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
+
 using System.ServiceModel;
 
 namespace Autofac.Multitenant.Wcf
 {
     /// <summary>
-    /// Extension for <see cref="System.ServiceModel.OperationContext"/>
+    /// Extension for <see cref="OperationContext"/>
     /// that allows propagation of the tenant ID.
     /// </summary>
     /// <remarks>
     /// <para>
     /// Use this extension in conjunction with the
-    /// <see cref="Autofac.Multitenant.Wcf.OperationContextTenantIdentificationStrategy"/>
+    /// <see cref="OperationContextTenantIdentificationStrategy"/>
     /// to determine which tenant a given operation is running under.
     /// </para>
     /// <para>
     /// For example, you could use an <see cref="System.ServiceModel.Dispatcher.IDispatchMessageInspector"/>
     /// that gets the tenant ID from an incoming header and adds a
-    /// <see cref="Autofac.Multitenant.Wcf.TenantIdentificationContextExtension"/>
-    /// to the current <see cref="System.ServiceModel.OperationContext"/> with
+    /// <see cref="TenantIdentificationContextExtension"/>
+    /// to the current <see cref="OperationContext"/> with
     /// the tenant ID value. Then you could register the
-    /// <see cref="Autofac.Multitenant.Wcf.OperationContextTenantIdentificationStrategy"/>
+    /// <see cref="OperationContextTenantIdentificationStrategy"/>
     /// as the mechanism for determining the tenant ID when resolving multitenant dependencies.
     /// </para>
     /// <para>
-    /// The <see cref="Autofac.Multitenant.Wcf.TenantPropagationBehavior{TTenantId}"/>
+    /// The <see cref="TenantPropagationBehavior{TTenantId}"/>
     /// is a behavior that does exactly that - adds the tenant ID to outbound messages on the client
     /// and parses them on the service side. For a usage example, see
-    /// <see cref="Autofac.Multitenant.Wcf.TenantPropagationBehavior{TTenantId}"/>
+    /// <see cref="TenantPropagationBehavior{TTenantId}"/>.
     /// </para>
     /// </remarks>
-    /// <seealso cref="Autofac.Multitenant.Wcf.OperationContextTenantIdentificationStrategy"/>
-    /// <seealso cref="Autofac.Multitenant.Wcf.TenantPropagationBehavior{TTenantId}"/>
+    /// <seealso cref="OperationContextTenantIdentificationStrategy"/>
+    /// <seealso cref="TenantPropagationBehavior{TTenantId}"/>
     public class TenantIdentificationContextExtension : IExtension<OperationContext>
     {
         /// <summary>
         /// Gets or sets the tenant ID.
         /// </summary>
         /// <value>
-        /// An <see cref="System.Object"/> that uniquely identifies the tenant
+        /// An <see cref="object"/> that uniquely identifies the tenant
         /// under which the current operation is executing.
         /// </value>
         public object TenantId { get; set; }
