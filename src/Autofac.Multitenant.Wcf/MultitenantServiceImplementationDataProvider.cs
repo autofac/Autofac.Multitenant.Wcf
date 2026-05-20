@@ -22,7 +22,7 @@ namespace Autofac.Multitenant.Wcf
         /// Proxy generator used to create proxy types that will be substituted
         /// in during service hosting.
         /// </summary>
-        private static readonly ServiceHostProxyGenerator _generator = new ServiceHostProxyGenerator();
+        private static readonly ServiceHostProxyGenerator Generator = new ServiceHostProxyGenerator();
 
         /// <summary>
         /// Gets data about a service implementation.
@@ -97,8 +97,8 @@ namespace Autofac.Multitenant.Wcf
             // created for the same interface type that have a target will be
             // of the same type as the original - "Castle.Proxies.ProxyType_1"
             // (or whatever) because Castle caches the various proxy type definitions.
-            var dummyHostProxyObject = _generator.CreateInterfaceProxyWithoutTarget(serviceInterfaceType);
-            var actualHostProxyObject = _generator.CreateWcfProxy(serviceInterfaceType, dummyHostProxyObject);
+            var dummyHostProxyObject = Generator.CreateInterfaceProxyWithoutTarget(serviceInterfaceType);
+            var actualHostProxyObject = Generator.CreateWcfProxy(serviceInterfaceType, dummyHostProxyObject);
 
             return new ServiceImplementationData
             {
@@ -110,7 +110,7 @@ namespace Autofac.Multitenant.Wcf
 
                     // The wrapped implementation will be of the same proxy
                     // type as "actualHostProxyObject" above.
-                    var implementationProxy = _generator.CreateWcfProxy(serviceInterfaceType, implementation);
+                    var implementationProxy = Generator.CreateWcfProxy(serviceInterfaceType, implementation);
                     return implementationProxy;
                 },
             };
