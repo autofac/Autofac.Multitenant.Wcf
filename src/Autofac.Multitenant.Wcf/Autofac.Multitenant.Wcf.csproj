@@ -6,7 +6,7 @@
     <VersionPrefix>0.0.1</VersionPrefix>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <NoWarn>$(NoWarn);IDE0008</NoWarn>
+    <NoWarn>$(NoWarn);IDE0008;NU1903</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Autofac.Multitenant.Wcf</AssemblyName>
     <AssemblyOriginatorKeyFile>../../Autofac.snk</AssemblyOriginatorKeyFile>
@@ -22,7 +22,7 @@
     <AssemblyTitle>Autofac.Multitenant.Wcf</AssemblyTitle>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>Copyright © 2014 Autofac Contributors</Copyright>
-    <CodeAnalysisRuleSet>../../build/Analyzers.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>../../build/Source.ruleset</CodeAnalysisRuleSet>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedAllSources>true</EmbedAllSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
