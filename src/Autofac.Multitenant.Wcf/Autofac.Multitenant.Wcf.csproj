@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <Description>Multitenant applications allow individual tenants to override dependencies rather than having a simple root container for everyone. This extension provides support for an application container and tenant-specific overrides using Autofac when hosting WCF services.</Description>
-    <!-- VersionPrefix patched by AppVeyor -->
-    <VersionPrefix>0.0.1</VersionPrefix>
     <TargetFramework>net481</TargetFramework>
     <LangVersion>latest</LangVersion>
     <NoWarn>$(NoWarn);IDE0008;NU1903</NoWarn>
