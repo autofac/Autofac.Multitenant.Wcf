@@ -22,7 +22,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         {
             var generator = new ServiceHostProxyGenerator();
             object target = new ServiceImplementation();
-            Type interfaceToProxy = typeof(IServiceContract);
+            var interfaceToProxy = typeof(IServiceContract);
             var proxy = generator.CreateWcfProxy(interfaceToProxy, target);
 
             // XUnit does not have "Assert.DoesNotThrow".
@@ -34,7 +34,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         {
             var generator = new ServiceHostProxyGenerator();
             object target = new ServiceImplementation();
-            Type interfaceToProxy = typeof(ServiceImplementation);
+            var interfaceToProxy = typeof(ServiceImplementation);
             Assert.Throws<ArgumentException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
@@ -43,7 +43,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         {
             var generator = new ServiceHostProxyGenerator();
             object target = new NotAServiceImplementation();
-            Type interfaceToProxy = typeof(INotAServiceContract);
+            var interfaceToProxy = typeof(INotAServiceContract);
             Assert.Throws<ArgumentException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
@@ -52,7 +52,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         {
             var generator = new ServiceHostProxyGenerator();
             object target = new ServiceImplementation();
-            Type interfaceToProxy = typeof(IServiceContractGeneric<>);
+            var interfaceToProxy = typeof(IServiceContractGeneric<>);
             Assert.Throws<ArgumentException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
@@ -70,7 +70,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         {
             var generator = new ServiceHostProxyGenerator();
             object target = null;
-            Type interfaceToProxy = typeof(IServiceContract);
+            var interfaceToProxy = typeof(IServiceContract);
             Assert.Throws<ArgumentNullException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
@@ -79,7 +79,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         {
             var generator = new ServiceHostProxyGenerator();
             object target = new NotAServiceImplementation();
-            Type interfaceToProxy = typeof(IServiceContract);
+            var interfaceToProxy = typeof(IServiceContract);
             Assert.Throws<ArgumentException>(() => generator.CreateWcfProxy(interfaceToProxy, target));
         }
 
@@ -104,7 +104,10 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
 
         private class ServiceImplementation : IServiceContract
         {
-            public bool ProxyMethodCalled { get; set; }
+            public bool ProxyMethodCalled
+            {
+                get; set;
+            }
 
             public void MethodToProxy()
             {

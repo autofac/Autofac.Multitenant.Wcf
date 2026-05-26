@@ -1,65 +1,65 @@
-﻿// Copyright (c) Autofac Project. All rights reserved.
-// Licensed under the MIT License. See LICENSE in the project root for license information.
+﻿// <copyright file="CustomAttributeDataExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Autofac.Multitenant.Wcf.DynamicProxy;
 
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Autofac.Multitenant.Wcf.DynamicProxy
+/// <summary>
+/// Extension methods for <see cref="CustomAttributeData"/>.
+/// </summary>
+public static class CustomAttributeDataExtensions
 {
     /// <summary>
-    /// Extension methods for <see cref="CustomAttributeData"/>.
+    /// Converts a custom attribute data object to a custom attribute builder for code generation.
     /// </summary>
-    public static class CustomAttributeDataExtensions
+    /// <param name="data">The data about a custom attribute to be converted for code emission.</param>
+    /// <returns>
+    /// A <see cref="CustomAttributeBuilder"/> with
+    /// the same values as <paramref name="data" /> so it can be copied
+    /// to another member in code generation.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown if <paramref name="data" /> is <see langword="null" />.
+    /// </exception>
+    public static CustomAttributeBuilder ToAttributeBuilder(this CustomAttributeData data)
     {
-        /// <summary>
-        /// Converts a custom attribute data object to a custom attribute builder for code generation.
-        /// </summary>
-        /// <param name="data">The data about a custom attribute to be converted for code emission.</param>
-        /// <returns>
-        /// A <see cref="CustomAttributeBuilder"/> with
-        /// the same values as <paramref name="data" /> so it can be copied
-        /// to another member in code generation.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="data" /> is <see langword="null" />.
-        /// </exception>
-        public static CustomAttributeBuilder ToAttributeBuilder(this CustomAttributeData data)
+        if (data == null)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-
-            var constructorArguments = new List<object>();
-            foreach (var ctorArg in data.ConstructorArguments)
-            {
-                constructorArguments.Add(ctorArg.Value);
-            }
-
-            var propertyArguments = new List<PropertyInfo>();
-            var propertyArgumentValues = new List<object>();
-            var fieldArguments = new List<FieldInfo>();
-            var fieldArgumentValues = new List<object>();
-            foreach (var namedArg in data.NamedArguments)
-            {
-                var fi = namedArg.MemberInfo as FieldInfo;
-                var pi = namedArg.MemberInfo as PropertyInfo;
-
-                if (fi != null)
-                {
-                    fieldArguments.Add(fi);
-                    fieldArgumentValues.Add(namedArg.TypedValue.Value);
-                }
-                else if (pi != null)
-                {
-                    propertyArguments.Add(pi);
-                    propertyArgumentValues.Add(namedArg.TypedValue.Value);
-                }
-            }
-
-            return new CustomAttributeBuilder(data.Constructor, constructorArguments.ToArray(), propertyArguments.ToArray(), propertyArgumentValues.ToArray(), fieldArguments.ToArray(), fieldArgumentValues.ToArray());
+            throw new ArgumentNullException(nameof(data));
         }
+
+        var constructorArguments = new List<object>();
+        foreach (var ctorArg in data.ConstructorArguments)
+        {
+            constructorArguments.Add(ctorArg.Value);
+        }
+
+        var propertyArguments = new List<PropertyInfo>();
+        var propertyArgumentValues = new List<object>();
+        var fieldArguments = new List<FieldInfo>();
+        var fieldArgumentValues = new List<object>();
+        foreach (var namedArg in data.NamedArguments)
+        {
+            var fi = namedArg.MemberInfo as FieldInfo;
+            var pi = namedArg.MemberInfo as PropertyInfo;
+
+            if (fi != null)
+            {
+                fieldArguments.Add(fi);
+                fieldArgumentValues.Add(namedArg.TypedValue.Value);
+            }
+            else if (pi != null)
+            {
+                propertyArguments.Add(pi);
+                propertyArgumentValues.Add(namedArg.TypedValue.Value);
+            }
+        }
+
+        return new CustomAttributeBuilder(data.Constructor, constructorArguments.ToArray(), propertyArguments.ToArray(), propertyArgumentValues.ToArray(), fieldArguments.ToArray(), fieldArgumentValues.ToArray());
     }
 }

@@ -5,9 +5,15 @@ namespace Autofac.Multitenant.Wcf.Test.Stubs
 {
     public class StubTenantIdentificationStrategy : ITenantIdentificationStrategy
     {
-        public bool IdentificationSuccess { get; }
+        public bool IdentificationSuccess
+        {
+            get;
+        }
 
-        public object TenantId { get; set; }
+        public object TenantId
+        {
+            get; set;
+        }
 
         public StubTenantIdentificationStrategy()
         {

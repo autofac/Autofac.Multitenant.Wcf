@@ -82,7 +82,10 @@ namespace Autofac.Multitenant.Wcf.Test
 
         private class ServiceImplementation : IServiceContract
         {
-            public bool ProxyMethodCalled { get; set; }
+            public bool ProxyMethodCalled
+            {
+                get; set;
+            }
 
             public void MethodToProxy()
             {
