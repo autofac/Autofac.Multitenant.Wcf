@@ -11,8 +11,7 @@ namespace Autofac.Multitenant.Wcf.Test
         public void TryIdentifyTenant_NoOperationContext()
         {
             var strategy = new OperationContextTenantIdentificationStrategy();
-            object tenantId;
-            bool success = strategy.TryIdentifyTenant(out tenantId);
+            var success = strategy.TryIdentifyTenant(out _);
             Assert.False(success);
         }
     }
