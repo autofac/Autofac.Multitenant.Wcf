@@ -25,8 +25,8 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
             var interfaceToProxy = typeof(IServiceContract);
             var proxy = generator.CreateWcfProxy(interfaceToProxy, target);
 
-            // XUnit does not have "Assert.DoesNotThrow".
-            new ServiceHost(proxy.GetType(), new Uri("http://localhost:22111/Foo.svc"));
+            var exception = Record.Exception(() => new ServiceHost(proxy.GetType(), new Uri("http://localhost:22111/Foo.svc")));
+            Assert.Null(exception);
         }
 
         [Fact]

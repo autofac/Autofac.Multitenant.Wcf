@@ -10,15 +10,15 @@ namespace Autofac.Multitenant.Wcf.Test
         [Fact]
         public void Attach_NoOp()
         {
-            // XUnit does not have "Assert.DoesNotThrow".
-            new TenantIdentificationContextExtension().Attach(null);
+            var exception = Record.Exception(() => new TenantIdentificationContextExtension().Attach(null));
+            Assert.Null(exception);
         }
 
         [Fact]
         public void Detach_NoOp()
         {
-            // XUnit does not have "Assert.DoesNotThrow".
-            new TenantIdentificationContextExtension().Detach(null);
+            var exception = Record.Exception(() => new TenantIdentificationContextExtension().Detach(null));
+            Assert.Null(exception);
         }
     }
 }

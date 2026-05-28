@@ -22,8 +22,8 @@ namespace Autofac.Multitenant.Wcf.Test
             var inspector = new TenantPropagationMessageInspector<string>(new StubTenantIdentificationStrategy());
             Message msg = null;
 
-            // XUnit does not have "Assert.DoesNotThrow".
-            inspector.AfterReceiveReply(ref msg, null);
+            var exception = Record.Exception(() => inspector.AfterReceiveReply(ref msg, null));
+            Assert.Null(exception);
         }
 
         [Fact]
@@ -32,8 +32,8 @@ namespace Autofac.Multitenant.Wcf.Test
             var inspector = new TenantPropagationMessageInspector<string>(new StubTenantIdentificationStrategy());
             Message msg = null;
 
-            // XUnit does not have "Assert.DoesNotThrow".
-            inspector.BeforeSendReply(ref msg, null);
+            var exception = Record.Exception(() => inspector.BeforeSendReply(ref msg, null));
+            Assert.Null(exception);
         }
     }
 }
