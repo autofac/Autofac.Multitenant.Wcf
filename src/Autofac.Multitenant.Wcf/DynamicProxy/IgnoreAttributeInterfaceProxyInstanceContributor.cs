@@ -1,8 +1,5 @@
-﻿// <copyright file="IgnoreAttributeInterfaceProxyInstanceContributor.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf.DynamicProxy;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.ServiceModel;
@@ -10,6 +7,8 @@ using Castle.DynamicProxy;
 using Castle.DynamicProxy.Contributors;
 using Castle.DynamicProxy.Generators.Emitters;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+
+namespace Autofac.Multitenant.Wcf.DynamicProxy;
 
 /// <summary>
 /// Code generator that ignores type-level non-inherited attributes.

@@ -1,8 +1,5 @@
-﻿// <copyright file="ServiceHostInterfaceProxyGenerator.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf.DynamicProxy;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.Collections.Generic;
@@ -12,6 +9,8 @@ using Castle.DynamicProxy.Contributors;
 using Castle.DynamicProxy.Generators;
 using Castle.DynamicProxy.Generators.Emitters;
 using Castle.DynamicProxy.Internal;
+
+namespace Autofac.Multitenant.Wcf.DynamicProxy;
 
 /// <summary>
 /// Interface proxy generator that builds a proxy that has a default constructor
@@ -59,7 +58,7 @@ public class ServiceHostInterfaceProxyGenerator : InterfaceProxyWithTargetInterf
     // If it turns out the proxy type needs a parameterless constructor,
     // override the BuildClassEmitter method here, call base, and then
     // add a constructor to the ClassEmitter like this:
-    // emitter.CreateConstructor(new ArgumentReference[0]);
+    // emitter.CreateConstructor(new ArgumentReference[0])
 
     // If it turns out custom attributes also need to be copied at the
     // method/property/field level, the appropriate overrides need to happen
@@ -157,7 +156,7 @@ public class ServiceHostInterfaceProxyGenerator : InterfaceProxyWithTargetInterf
     protected override IEnumerable<Type> GetTypeImplementerMapping(Type[] interfaces, Type proxyTargetType, out IEnumerable<ITypeContributor> contributors, INamingScope namingScope)
     {
         var typeImplementerMapping = new Dictionary<Type, ITypeContributor>();
-        var allInterfaces = TypeUtil.GetAllInterfaces(new[] { proxyTargetType });
+        var allInterfaces = TypeUtil.GetAllInterfaces(proxyTargetType);
         var additionalInterfaces = TypeUtil.GetAllInterfaces(interfaces);
         var implementer = AddMappingForTargetType(typeImplementerMapping, proxyTargetType, allInterfaces, additionalInterfaces, namingScope);
         var instance = new IgnoreAttributeInterfaceProxyInstanceContributor(targetType, GeneratorType, interfaces);

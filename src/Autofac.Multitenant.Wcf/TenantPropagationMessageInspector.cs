@@ -1,14 +1,13 @@
-﻿// <copyright file="TenantPropagationMessageInspector.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
+
+namespace Autofac.Multitenant.Wcf;
 
 /// <summary>
 /// Message inspector that helps in passing the tenant ID from a WCF client

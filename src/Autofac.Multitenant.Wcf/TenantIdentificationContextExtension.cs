@@ -1,10 +1,9 @@
-﻿// <copyright file="TenantIdentificationContextExtension.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System.ServiceModel;
+
+namespace Autofac.Multitenant.Wcf;
 
 /// <summary>
 /// Extension for <see cref="OperationContext"/>

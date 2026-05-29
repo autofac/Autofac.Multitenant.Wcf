@@ -1,10 +1,9 @@
-﻿// <copyright file="TypeExtensions.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf.DynamicProxy;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
+
+namespace Autofac.Multitenant.Wcf.DynamicProxy;
 
 /// <summary>
 /// Extension methods for the <see cref="Type"/> class.

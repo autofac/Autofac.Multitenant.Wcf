@@ -23,8 +23,8 @@ namespace Autofac.Multitenant.Wcf.Test
         {
             var behavior = new TenantPropagationBehavior<string>(new StubTenantIdentificationStrategy());
 
-            // XUnit does not have "Assert.DoesNotThrow".
-            behavior.AddBindingParameters(null, null);
+            var exception = Record.Exception(() => behavior.AddBindingParameters(null, null));
+            Assert.Null(exception);
         }
 
         [Fact]
@@ -32,8 +32,8 @@ namespace Autofac.Multitenant.Wcf.Test
         {
             var behavior = new TenantPropagationBehavior<string>(new StubTenantIdentificationStrategy());
 
-            // XUnit does not have "Assert.DoesNotThrow".
-            behavior.AddBindingParameters(null, null, null, null);
+            var exception = Record.Exception(() => behavior.AddBindingParameters(null, null, null, null));
+            Assert.Null(exception);
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace Autofac.Multitenant.Wcf.Test
         {
             var behavior = new TenantPropagationBehavior<string>(new StubTenantIdentificationStrategy());
 
-            // XUnit does not have "Assert.DoesNotThrow".
-            behavior.ApplyDispatchBehavior((ServiceEndpoint)null, (EndpointDispatcher)null);
+            var exception = Record.Exception(() => behavior.ApplyDispatchBehavior((ServiceEndpoint)null, (EndpointDispatcher)null));
+            Assert.Null(exception);
         }
 
         [Fact]
@@ -66,8 +66,8 @@ namespace Autofac.Multitenant.Wcf.Test
         {
             var behavior = new TenantPropagationBehavior<string>(new StubTenantIdentificationStrategy());
 
-            // XUnit does not have "Assert.DoesNotThrow".
-            behavior.Validate(null);
+            var exception = Record.Exception(() => behavior.Validate(null));
+            Assert.Null(exception);
         }
 
         [Fact]
@@ -75,8 +75,8 @@ namespace Autofac.Multitenant.Wcf.Test
         {
             var behavior = new TenantPropagationBehavior<string>(new StubTenantIdentificationStrategy());
 
-            // XUnit does not have "Assert.DoesNotThrow".
-            behavior.Validate(null, null);
+            var exception = Record.Exception(() => behavior.Validate(null, null));
+            Assert.Null(exception);
         }
     }
 }

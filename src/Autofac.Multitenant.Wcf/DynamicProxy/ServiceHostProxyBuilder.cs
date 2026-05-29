@@ -1,8 +1,5 @@
-﻿// <copyright file="ServiceHostProxyBuilder.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf.DynamicProxy;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.Globalization;
@@ -10,6 +7,8 @@ using System.Security;
 using Autofac.Multitenant.Wcf.Properties;
 using Castle.DynamicProxy;
 using Castle.DynamicProxy.Generators;
+
+namespace Autofac.Multitenant.Wcf.DynamicProxy;
 
 /// <summary>
 /// Proxy builder that has an additional method to create proxies usable
@@ -68,7 +67,7 @@ public class ServiceHostProxyBuilder : DefaultProxyBuilder
         // validate types but the validation logic is not accessible.
         var isTargetNested = target.IsNested;
         var isNestedAndInternal = isTargetNested && (target.IsNestedAssembly || target.IsNestedFamORAssem);
-        var isInternalNotNested = target.IsVisible == false && isTargetNested == false;
+        var isInternalNotNested = !target.IsVisible && !isTargetNested;
 
         var internalAndVisibleToDynProxy = (isInternalNotNested || isNestedAndInternal) && ProxyUtil.IsAccessible(target);
         var isAccessible = target.IsPublic || target.IsNestedPublic || internalAndVisibleToDynProxy;

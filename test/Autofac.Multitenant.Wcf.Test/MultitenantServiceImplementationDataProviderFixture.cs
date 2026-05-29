@@ -77,6 +77,7 @@ namespace Autofac.Multitenant.Wcf.Test
         public interface IServiceContract
         {
             // Has to be public or Castle.DynamicProxy can't make a proxy.
+            [OperationContract]
             void MethodToProxy();
         }
 

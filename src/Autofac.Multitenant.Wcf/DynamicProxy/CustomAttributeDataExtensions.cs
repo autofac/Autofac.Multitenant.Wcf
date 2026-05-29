@@ -1,13 +1,12 @@
-﻿// <copyright file="CustomAttributeDataExtensions.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf.DynamicProxy;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+
+namespace Autofac.Multitenant.Wcf.DynamicProxy;
 
 /// <summary>
 /// Extension methods for <see cref="CustomAttributeData"/>.
