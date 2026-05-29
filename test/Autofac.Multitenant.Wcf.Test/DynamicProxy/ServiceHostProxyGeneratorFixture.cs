@@ -92,6 +92,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         public interface IServiceContract
         {
             // Has to be public or Castle.DynamicProxy can't make a proxy.
+            [OperationContract]
             void MethodToProxy();
         }
 
@@ -99,6 +100,7 @@ namespace Autofac.Multitenant.Wcf.Test.DynamicProxy
         public interface IServiceContractGeneric<T>
         {
             // Has to be public or Castle.DynamicProxy can't make a proxy.
+            [OperationContract]
             void MethodToProxy();
         }
 

@@ -1,15 +1,15 @@
-﻿// <copyright file="TenantPropagationBehavior.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
+
+namespace Autofac.Multitenant.Wcf;
 
 /// <summary>
 /// Behavior for WCF clients and service hosts that is used to propagate
@@ -239,7 +239,7 @@ public class TenantPropagationBehavior<TTenantId> : IServiceBehavior, IEndpointB
             throw new ArgumentNullException(nameof(serviceHostBase));
         }
 
-        foreach (ChannelDispatcher channelDispatcher in serviceHostBase.ChannelDispatchers)
+        foreach (var channelDispatcher in serviceHostBase.ChannelDispatchers.Cast<ChannelDispatcher>())
         {
             foreach (var endpointDispatcher in channelDispatcher.Endpoints)
             {

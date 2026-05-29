@@ -1,12 +1,11 @@
-﻿// <copyright file="ServiceMetadataTypeAttribute.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.ServiceModel;
 using Autofac.Integration.Wcf;
+
+namespace Autofac.Multitenant.Wcf;
 
 /// <summary>
 /// Specifies the metadata class to associate with a service implementation.

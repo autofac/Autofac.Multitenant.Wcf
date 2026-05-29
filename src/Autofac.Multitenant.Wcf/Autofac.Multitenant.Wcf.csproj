@@ -39,11 +39,12 @@
       <DependentUpon>Properties\Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <None Include="..\..\build\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
-
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\build\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac.Multitenant" Version="6.0.0" />
     <PackageReference Include="Autofac.Wcf" Version="6.0.0" />

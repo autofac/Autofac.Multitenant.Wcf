@@ -1,8 +1,5 @@
-﻿// <copyright file="MultitenantServiceImplementationDataProvider.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Autofac.Multitenant.Wcf;
+﻿// Copyright (c) Autofac Project. All rights reserved.
+// Licensed under the MIT License. See LICENSE in the project root for license information.
 
 using System;
 using System.Globalization;
@@ -11,6 +8,8 @@ using System.ServiceModel;
 using Autofac.Integration.Wcf;
 using Autofac.Multitenant.Wcf.DynamicProxy;
 using Autofac.Multitenant.Wcf.Properties;
+
+namespace Autofac.Multitenant.Wcf;
 
 /// <summary>
 /// Service implementation data provider that returns multitenant-aware
