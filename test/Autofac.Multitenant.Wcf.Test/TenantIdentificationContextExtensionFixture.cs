@@ -3,22 +3,21 @@
 
 using Xunit;
 
-namespace Autofac.Multitenant.Wcf.Test
-{
-    public class TenantIdentificationContextExtensionFixture
-    {
-        [Fact]
-        public void Attach_NoOp()
-        {
-            var exception = Record.Exception(() => new TenantIdentificationContextExtension().Attach(null));
-            Assert.Null(exception);
-        }
+namespace Autofac.Multitenant.Wcf.Test;
 
-        [Fact]
-        public void Detach_NoOp()
-        {
-            var exception = Record.Exception(() => new TenantIdentificationContextExtension().Detach(null));
-            Assert.Null(exception);
-        }
+public class TenantIdentificationContextExtensionFixture
+{
+    [Fact]
+    public void Attach_NoOp()
+    {
+        var exception = Record.Exception(() => new TenantIdentificationContextExtension().Attach(null!));
+        Assert.Null(exception);
+    }
+
+    [Fact]
+    public void Detach_NoOp()
+    {
+        var exception = Record.Exception(() => new TenantIdentificationContextExtension().Detach(null!));
+        Assert.Null(exception);
     }
 }
