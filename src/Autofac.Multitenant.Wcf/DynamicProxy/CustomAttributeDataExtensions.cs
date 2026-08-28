@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Autofac Project. All rights reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Reflection.Emit;
+using Castle.DynamicProxy;
 
 namespace Autofac.Multitenant.Wcf.DynamicProxy;
 
@@ -14,18 +12,18 @@ namespace Autofac.Multitenant.Wcf.DynamicProxy;
 public static class CustomAttributeDataExtensions
 {
     /// <summary>
-    /// Converts a custom attribute data object to a custom attribute builder for code generation.
+    /// Converts a custom attribute data object to the form Castle uses for code generation.
     /// </summary>
     /// <param name="data">The data about a custom attribute to be converted for code emission.</param>
     /// <returns>
-    /// A <see cref="CustomAttributeBuilder"/> with
+    /// A <see cref="CustomAttributeInfo"/> with
     /// the same values as <paramref name="data" /> so it can be copied
     /// to another member in code generation.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// Thrown if <paramref name="data" /> is <see langword="null" />.
     /// </exception>
-    public static CustomAttributeBuilder ToAttributeBuilder(this CustomAttributeData data)
+    public static CustomAttributeInfo ToCustomAttributeInfo(this CustomAttributeData data)
     {
         if (data == null)
         {
@@ -59,6 +57,6 @@ public static class CustomAttributeDataExtensions
             }
         }
 
-        return new CustomAttributeBuilder(data.Constructor, constructorArguments.ToArray(), propertyArguments.ToArray(), propertyArgumentValues.ToArray(), fieldArguments.ToArray(), fieldArgumentValues.ToArray());
+        return new CustomAttributeInfo(data.Constructor, constructorArguments.ToArray(), propertyArguments.ToArray(), propertyArgumentValues.ToArray(), fieldArguments.ToArray(), fieldArgumentValues.ToArray());
     }
 }
