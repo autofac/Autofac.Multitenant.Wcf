@@ -40,9 +40,10 @@ public class TenantIdentificationContextExtension : IExtension<OperationContext>
     /// </summary>
     /// <value>
     /// An <see cref="object"/> that uniquely identifies the tenant
-    /// under which the current operation is executing.
+    /// under which the current operation is executing, or <see langword="null" />
+    /// to indicate the default tenant.
     /// </value>
-    public object TenantId
+    public object? TenantId
     {
         get; set;
     }

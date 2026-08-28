@@ -20,7 +20,7 @@ public static class TypeExtensions
     /// <see cref="ServiceMetadataTypeAttribute"/>,
     /// if it exists; otherwise <see langword="null" />.
     /// </returns>
-    public static Type GetMetadataClassType(this Type interfaceType)
+    public static Type? GetMetadataClassType(this Type interfaceType)
     {
         if (interfaceType == null)
         {

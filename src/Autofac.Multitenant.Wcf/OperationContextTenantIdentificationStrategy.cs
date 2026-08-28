@@ -54,7 +54,7 @@ public class OperationContextTenantIdentificationStrategy : ITenantIdentificatio
     /// operation context.
     /// </para>
     /// </remarks>
-    public bool TryIdentifyTenant(out object tenantId)
+    public bool TryIdentifyTenant(out object? tenantId)
     {
         tenantId = null;
         var context = OperationContext.Current;

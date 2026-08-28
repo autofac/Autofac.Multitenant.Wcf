@@ -102,7 +102,7 @@ public class TenantPropagationMessageInspector<TTenantId> : IClientMessageInspec
     /// <exception cref="ArgumentNullException">
     /// Thrown if <paramref name="request" /> is <see langword="null" />.
     /// </exception>
-    public object AfterReceiveRequest(ref Message request, IClientChannel channel, InstanceContext instanceContext)
+    public object? AfterReceiveRequest(ref Message request, IClientChannel channel, InstanceContext instanceContext)
     {
         if (request == null)
         {
@@ -136,8 +136,7 @@ public class TenantPropagationMessageInspector<TTenantId> : IClientMessageInspec
     /// <exception cref="ArgumentNullException">
     /// Thrown if <paramref name="request" /> is <see langword="null" />.
     /// </exception>
-    [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Validation is performed manually at the start of the method.")]
-    public object BeforeSendRequest(ref Message request, IClientChannel channel)
+    public object? BeforeSendRequest(ref Message request, IClientChannel channel)
     {
         if (request == null)
         {
@@ -147,14 +146,17 @@ public class TenantPropagationMessageInspector<TTenantId> : IClientMessageInspec
         // ApplicationContainer is used rather than RequestLifetime because
         // you don't want individual tenants overriding the mechanism
         // that determines tenant.
+
+        // TTenantId is documented as having to be nullable, so a null ID is
+        // expected here rather than exceptional - it propagates the default tenant.
         TTenantId tenantId;
         if (!this.TenantIdentificationStrategy.TryIdentifyTenant(out var contextTenantId))
         {
-            tenantId = default;
+            tenantId = default!;
         }
         else
         {
-            tenantId = (TTenantId)contextTenantId;
+            tenantId = (TTenantId)contextTenantId!;
         }
 
         var tenantHeader = new MessageHeader<TTenantId>(tenantId).GetUntypedHeader(TenantHeaderName, TenantHeaderNamespace);
