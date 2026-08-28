@@ -1,71 +1,87 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <Description>Multitenant applications allow individual tenants to override dependencies rather than having a simple root container for everyone. This extension provides support for an application container and tenant-specific overrides using Autofac when hosting WCF services.</Description>
-    <!-- VersionPrefix patched by AppVeyor -->
-    <VersionPrefix>0.0.1</VersionPrefix>
-    <TargetFramework>net472</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <NoWarn>$(NoWarn);IDE0008</NoWarn>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Assembly metadata -->
     <AssemblyName>Autofac.Multitenant.Wcf</AssemblyName>
+    <AssemblyTitle>Autofac.Multitenant.Wcf</AssemblyTitle>
+    <Description>Multitenant applications allow individual tenants to override dependencies rather than having a simple root container for everyone. This extension provides support for an application container and tenant-specific overrides using Autofac when hosting WCF services.</Description>
+    <Copyright>Copyright © 2014 Autofac Contributors</Copyright>
+    <Authors>Autofac Contributors</Authors>
+    <Company>Autofac</Company>
+    <Product>Autofac</Product>
     <AssemblyOriginatorKeyFile>../../Autofac.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <!-- Frameworks and language features -->
+    <TargetFramework>net481</TargetFramework>
+    <NoWarn>$(NoWarn);IDE0008;NU1903</NoWarn>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <CodeAnalysisRuleSet>../../build/Source.ruleset</CodeAnalysisRuleSet>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Packaging -->
     <PackageId>Autofac.Multitenant.Wcf</PackageId>
     <PackageTags>autofac;di;ioc;dependencyinjection;wcf;multitenant</PackageTags>
     <PackageReleaseNotes>Release notes are at https://github.com/autofac/Autofac.Multitenant.Wcf/releases</PackageReleaseNotes>
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://autofac.org</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/autofac/Autofac.Multitenant.Wcf</RepositoryUrl>
-    <AssemblyTitle>Autofac.Multitenant.Wcf</AssemblyTitle>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <Copyright>Copyright © 2014 Autofac Contributors</Copyright>
-    <CodeAnalysisRuleSet>../../build/Analyzers.ruleset</CodeAnalysisRuleSet>
+    <ContinuousIntegrationBuild Condition="'$(CI)' != '' ">true</ContinuousIntegrationBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedAllSources>true</EmbedAllSources>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <Features>$(Features);IOperation</Features>
-    <Authors>Autofac Contributors</Authors>
-    <Company>Autofac</Company>
-    <Product>Autofac</Product>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- OmniSharp/VS Code resource generation -->
+    <CoreCompileDependsOn>PrepareResources;$(CompileDependsOn)</CoreCompileDependsOn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Properties\Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
   <ItemGroup>
     <None Include="..\..\build\icon.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Autofac.Multitenant" Version="6.0.0" />
-    <PackageReference Include="Autofac.Wcf" Version="6.0.0" />
-    <PackageReference Include="Castle.Core" Version="4.4.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.0">
+    <AdditionalFiles Include="..\..\build\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="9.3.1" />
+    <PackageReference Include="Autofac.Multitenant" Version="9.0.1" />
+    <PackageReference Include="Autofac.Wcf" Version="8.0.0" />
+    <PackageReference Include="Castle.Core" Version="5.2.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.400" Condition="Exists('$(MSBuildThisFileDirectory)../../.git')">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.33.0.1635">
       <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" Condition="Exists('$(MSBuildThisFileDirectory)../../.git')">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.205">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
+  <ItemDefinitionGroup>
+    <EmbeddedResource>
+      <Generator>MSBuild:Compile</Generator>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedFileName>$(IntermediateOutputPath)%(Filename).Designer.cs</StronglyTypedFileName>
+      <StronglyTypedClassName>%(Filename)</StronglyTypedClassName>
+    </EmbeddedResource>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="DynamicProxy\ServiceHostProxyGeneratorResources.resx">
+      <StronglyTypedNamespace>Autofac.Multitenant.Wcf.DynamicProxy</StronglyTypedNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MultitenantServiceImplementationDataProviderResources.resx">
+      <StronglyTypedNamespace>Autofac.Multitenant.Wcf</StronglyTypedNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>$(AssemblyName).Test, PublicKey=00240000048000009400000006020000002400005253413100040000010001008728425885ef385e049261b18878327dfaaf0d666dea3bd2b0e4f18b33929ad4e5fbc9087e7eda3c1291d2de579206d9b4292456abffbe8be6c7060b36da0c33b883e3878eaf7c89fddf29e6e27d24588e81e86f3a22dd7b1a296b5f06fbfb500bbd7410faa7213ef4e2ce7622aefc03169b0324bcd30ccfe9ac8204e4960be6</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-
 </Project>

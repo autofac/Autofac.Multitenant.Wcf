@@ -3,6 +3,7 @@
 
 # Project specific files
 artifacts/
+BenchmarkDotNet.Artifacts/
 
 # User-specific files
 *.suo
@@ -82,11 +83,6 @@ _TeamCity*
 
 # DotCover is a Code Coverage Tool
 *.dotCover
-
-# Coverage
-coverage.*
-codecov.sh
-coverage/
 
 # NCrunch
 *.ncrunch*

@@ -3,65 +3,68 @@
 
 using System.ServiceModel;
 
-namespace Autofac.Multitenant.Wcf
+namespace Autofac.Multitenant.Wcf;
+
+/// <summary>
+/// Extension for <see cref="OperationContext"/>
+/// that allows propagation of the tenant ID.
+/// </summary>
+/// <remarks>
+/// <para>
+/// Use this extension in conjunction with the
+/// <see cref="OperationContextTenantIdentificationStrategy"/>
+/// to determine which tenant a given operation is running under.
+/// </para>
+/// <para>
+/// For example, you could use an <see cref="System.ServiceModel.Dispatcher.IDispatchMessageInspector"/>
+/// that gets the tenant ID from an incoming header and adds a
+/// <see cref="TenantIdentificationContextExtension"/>
+/// to the current <see cref="OperationContext"/> with
+/// the tenant ID value. Then you could register the
+/// <see cref="OperationContextTenantIdentificationStrategy"/>
+/// as the mechanism for determining the tenant ID when resolving multitenant dependencies.
+/// </para>
+/// <para>
+/// The <see cref="TenantPropagationBehavior{TTenantId}"/>
+/// is a behavior that does exactly that - adds the tenant ID to outbound messages on the client
+/// and parses them on the service side. For a usage example, see
+/// <see cref="TenantPropagationBehavior{TTenantId}"/>.
+/// </para>
+/// </remarks>
+/// <seealso cref="OperationContextTenantIdentificationStrategy"/>
+/// <seealso cref="TenantPropagationBehavior{TTenantId}"/>
+public class TenantIdentificationContextExtension : IExtension<OperationContext>
 {
     /// <summary>
-    /// Extension for <see cref="OperationContext"/>
-    /// that allows propagation of the tenant ID.
+    /// Gets or sets the tenant ID.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Use this extension in conjunction with the
-    /// <see cref="OperationContextTenantIdentificationStrategy"/>
-    /// to determine which tenant a given operation is running under.
-    /// </para>
-    /// <para>
-    /// For example, you could use an <see cref="System.ServiceModel.Dispatcher.IDispatchMessageInspector"/>
-    /// that gets the tenant ID from an incoming header and adds a
-    /// <see cref="TenantIdentificationContextExtension"/>
-    /// to the current <see cref="OperationContext"/> with
-    /// the tenant ID value. Then you could register the
-    /// <see cref="OperationContextTenantIdentificationStrategy"/>
-    /// as the mechanism for determining the tenant ID when resolving multitenant dependencies.
-    /// </para>
-    /// <para>
-    /// The <see cref="TenantPropagationBehavior{TTenantId}"/>
-    /// is a behavior that does exactly that - adds the tenant ID to outbound messages on the client
-    /// and parses them on the service side. For a usage example, see
-    /// <see cref="TenantPropagationBehavior{TTenantId}"/>.
-    /// </para>
-    /// </remarks>
-    /// <seealso cref="OperationContextTenantIdentificationStrategy"/>
-    /// <seealso cref="TenantPropagationBehavior{TTenantId}"/>
-    public class TenantIdentificationContextExtension : IExtension<OperationContext>
+    /// <value>
+    /// An <see cref="object"/> that uniquely identifies the tenant
+    /// under which the current operation is executing, or <see langword="null" />
+    /// to indicate the default tenant.
+    /// </value>
+    public object? TenantId
     {
-        /// <summary>
-        /// Gets or sets the tenant ID.
-        /// </summary>
-        /// <value>
-        /// An <see cref="object"/> that uniquely identifies the tenant
-        /// under which the current operation is executing.
-        /// </value>
-        public object TenantId { get; set; }
+        get; set;
+    }
 
-        /// <summary>
-        /// Enables an extension object to find out when it has been aggregated.
-        /// </summary>
-        /// <param name="owner">
-        /// The extensible object that aggregates this extension.
-        /// </param>
-        public virtual void Attach(OperationContext owner)
-        {
-        }
+    /// <summary>
+    /// Enables an extension object to find out when it has been aggregated.
+    /// </summary>
+    /// <param name="owner">
+    /// The extensible object that aggregates this extension.
+    /// </param>
+    public virtual void Attach(OperationContext owner)
+    {
+    }
 
-        /// <summary>
-        /// Enables an object to find out when it is no longer aggregated.
-        /// </summary>
-        /// <param name="owner">
-        /// The extensible object that aggregates this extension.
-        /// </param>
-        public virtual void Detach(OperationContext owner)
-        {
-        }
+    /// <summary>
+    /// Enables an object to find out when it is no longer aggregated.
+    /// </summary>
+    /// <param name="owner">
+    /// The extensible object that aggregates this extension.
+    /// </param>
+    public virtual void Detach(OperationContext owner)
+    {
     }
 }
