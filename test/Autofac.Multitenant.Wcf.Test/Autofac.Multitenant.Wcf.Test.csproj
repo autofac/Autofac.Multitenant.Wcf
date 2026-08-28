@@ -11,7 +11,7 @@
   <ItemGroup>
     <!-- The xUnit settings disable AppDomain so that code coverage works with .NET Framework -->
     <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/KnownIssues.md#5-tests-fail-if-assembly-is-strong-named -->
-    <Content Include="..\..\xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\build\stylecop.json" Link="stylecop.json" />
