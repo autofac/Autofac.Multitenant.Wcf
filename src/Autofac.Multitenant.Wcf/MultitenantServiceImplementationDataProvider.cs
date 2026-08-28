@@ -7,7 +7,6 @@ using System.Security;
 using System.ServiceModel;
 using Autofac.Integration.Wcf;
 using Autofac.Multitenant.Wcf.DynamicProxy;
-using Autofac.Multitenant.Wcf.Properties;
 
 namespace Autofac.Multitenant.Wcf;
 
@@ -67,19 +66,19 @@ public class MultitenantServiceImplementationDataProvider : IServiceImplementati
 
         if (value.Length == 0)
         {
-            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ArgumentException_StringEmpty, nameof(value)));
+            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, MultitenantServiceImplementationDataProviderResources.ArgumentException_StringEmpty, nameof(value)));
         }
 
-        var serviceInterfaceType = Type.GetType(value, false) ?? throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotResolvable, value));
+        var serviceInterfaceType = Type.GetType(value, false) ?? throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, MultitenantServiceImplementationDataProviderResources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotResolvable, value));
 
         if (!serviceInterfaceType.IsInterface)
         {
-            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotInterface, value, serviceInterfaceType));
+            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, MultitenantServiceImplementationDataProviderResources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotInterface, value, serviceInterfaceType));
         }
 
         if (serviceInterfaceType.GetCustomAttributes(typeof(ServiceContractAttribute), false).Length == 0)
         {
-            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotServiceContract, value, serviceInterfaceType));
+            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, MultitenantServiceImplementationDataProviderResources.MultitenantServiceImplementationDataProvider_ServiceInterfaceTypeNotServiceContract, value, serviceInterfaceType));
         }
 
         // To create the actual proxy object type that will be used to sub-in

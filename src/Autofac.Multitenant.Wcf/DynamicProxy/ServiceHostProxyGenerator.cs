@@ -6,7 +6,6 @@ using System.Globalization;
 using System.Security;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
-using Autofac.Multitenant.Wcf.Properties;
 using Castle.DynamicProxy;
 
 namespace Autofac.Multitenant.Wcf.DynamicProxy;
@@ -107,12 +106,12 @@ public class ServiceHostProxyGenerator : ProxyGenerator
 
         if (!interfaceToProxy.IsInterface)
         {
-            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.DynamicProxy_InterfaceTypeToProxyNotInterface, interfaceToProxy.FullName), nameof(interfaceToProxy));
+            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, ServiceHostProxyGeneratorResources.DynamicProxy_InterfaceTypeToProxyNotInterface, interfaceToProxy.FullName), nameof(interfaceToProxy));
         }
 
         if (interfaceToProxy.IsGenericTypeDefinition)
         {
-            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.DynamicProxy_InterfaceTypeToProxyIsGeneric, interfaceToProxy.FullName), nameof(interfaceToProxy));
+            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, ServiceHostProxyGeneratorResources.DynamicProxy_InterfaceTypeToProxyIsGeneric, interfaceToProxy.FullName), nameof(interfaceToProxy));
         }
 
         if (target == null)
@@ -122,12 +121,12 @@ public class ServiceHostProxyGenerator : ProxyGenerator
 
         if (!interfaceToProxy.IsInstanceOfType(target))
         {
-            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.DynamicProxy_ProxyTargetDoesNotImplementInterface, target.GetType().FullName, interfaceToProxy.FullName), nameof(target));
+            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, ServiceHostProxyGeneratorResources.DynamicProxy_ProxyTargetDoesNotImplementInterface, target.GetType().FullName, interfaceToProxy.FullName), nameof(target));
         }
 
         if (interfaceToProxy.GetCustomAttributes(typeof(ServiceContractAttribute), false).Length == 0)
         {
-            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.DynamicProxy_InterfaceTypeToProxyNotServiceContract, interfaceToProxy.FullName));
+            throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, ServiceHostProxyGeneratorResources.DynamicProxy_InterfaceTypeToProxyNotServiceContract, interfaceToProxy.FullName));
         }
 
         var type = this.CreateWcfProxyType(interfaceToProxy);
